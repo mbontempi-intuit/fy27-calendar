@@ -88,9 +88,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .btn-primary:hover{background:#1560C8;box-shadow:0 2px 8px rgba(30,111,229,.3);}
 .btn-ghost{background:transparent;color:var(--t2);border:1.5px solid var(--border);}
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
-.btn-sheets{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18);}
-.btn-sheets:hover{background:rgba(255,255,255,.18);}
-.btn-sm{padding:5px 11px;font-size:11.5px;}
+.btn-sm{paddingca:5px 11px;font-size:11.5px;}
 .btn-icon{width:30px;height:30px;padding:0;justify-content:center;background:transparent;color:var(--t3);border:1.5px solid transparent;border-radius:var(--r);}
 .btn-icon:hover{background:var(--bg);color:var(--blue);border-color:var(--border);}
 .btn-icon.danger:hover{color:#EF4444;border-color:#FECACA;background:#FEF2F2;}
@@ -204,7 +202,6 @@ td{padding:10px 12px;vertical-align:middle;}
 .chip-more{font-size:8.5px;color:var(--blue);cursor:pointer;font-weight:500;padding:0 2px;}
 
 /* ── SHEETS PANEL ────────────────────────────────────── */
-#sheets-panel{padding:22px 28px 36px;}
 .sheets-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);max-width:720px;}
 .sheets-hero{background:linear-gradient(110deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--r2) var(--r2) 0 0;padding:24px 28px;display:flex;align-items:center;gap:18px;}
 .sheets-hero-icon{width:48px;height:48px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -222,10 +219,7 @@ code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--bg);b
 .url-row{display:flex;gap:8px;margin-top:10px;}
 .url-input{flex:1;font-family:'IBM Plex Mono',monospace;font-size:11.5px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 10px;background:var(--bg);color:var(--t1);outline:none;transition:border-color .14s;}
 .url-input:focus{border-color:var(--blue);background:var(--surface);}
-.col-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px;}
-.col-table th{text-align:left;font-weight:600;color:var(--t2);padding:5px 8px;background:var(--surface2);border:1px solid var(--border2);}
-.col-table td{padding:5px 8px;border:1px solid var(--border2);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--t1);}
-.col-table tr:nth-child(even) td{background:var(--surface2);}
+
 .import-status{margin-top:12px;font-size:12px;display:none;}
 .import-status.show{display:block;}
 .import-ok{color:#15803D;background:var(--green-lt);border:1px solid #BBF7D0;padding:7px 12px;border-radius:var(--r);}
@@ -281,10 +275,6 @@ textarea.mi{resize:vertical;min-height:60px;}
     </div>
     <div class="hdr-r">
       <span id="last-updated">Updated Jun 29, 2026</span>
-      <button class="btn btn-sheets btn-sm" onclick="switchTab('sheets')">
-        <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" fill="#34A853"></rect><path d="M5 7h4v2H5zM11 7h4v2h-4zM5 11h4v2H5zM11 11h4v2h-4zM5 15h4v1H5zM11 15h4v1h-4z" fill="white"></path></svg>
-        Google Sheets
-      </button>
     </div>
   </div>
 
@@ -307,10 +297,6 @@ textarea.mi{resize:vertical;min-height:60px;}
       <button class="tab" id="tab-cal" onclick="switchTab('cal')">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10.5" rx="1.5" stroke="currentColor" stroke-width="1.3"></rect><path d="M1 5.5h12M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
         Calendar  <span style="font-size:9.5px;opacity:.6;margin-left:2px;font-family:'IBM Plex Mono',monospace;">Aug 2026–Jul 2027</span>
-      </button>
-      <button class="tab" id="tab-sheets" onclick="switchTab('sheets')">
-        <svg width="13" height="13" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" fill="#34A853"></rect><path d="M5 7h4v2H5zM11 7h4v2h-4zM5 11h4v2H5zM11 11h4v2h-4z" fill="white"></path></svg>
-        Sheets Sync
       </button>
       <button class="tab" id="tab-signup" onclick="switchTab('signup')">
         <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1a3 3 0 100 6A3 3 0 007 1zM2 12c0-2.21 2.24-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path><path d="M11 6v4M13 8h-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
@@ -857,93 +843,6 @@ textarea.mi{resize:vertical;min-height:60px;}
     </div>
 
     <div class="months-grid" id="months-grid"></div>
-  </div>
-</div>
-
-<!-- ══ SHEETS PANEL ═════════════════════════════════════ -->
-<div class="panel" id="panel-sheets">
-  <div id="sheets-panel">
-    <div class="sheets-card">
-      <div class="sheets-hero">
-        <div class="sheets-hero-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" fill="#34A853"></rect><path d="M6 8h4v2H6zM14 8h4v2h-4zM6 12h4v2H6zM14 12h4v2h-4zM6 16h4v1H6zM14 16h4v1h-4z" fill="white"></path></svg>
-        </div>
-        <div>
-          <h2>Google Sheets Sync</h2>
-          <p>Keep this tracker in sync with a shared Google Sheet so your whole team can view and edit events live.</p>
-        </div>
-      </div>
-
-      <div class="steps">
-
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h3>Export current data to CSV</h3>
-            <p>Download all current events as a CSV file. This is your starting point for populating Google Sheets.</p>
-            <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="exportCSV()">
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6.5l3 3 3-3M2.5 10.5v2h9v-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-              Export CSV
-            </button>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h3>Paste into Google Sheets &amp; share</h3>
-            <p>Open <a href="https://sheets.google.com" target="_blank">sheets.google.com</a>, create a new sheet, and import the CSV (<strong>File → Import → Upload</strong>). Then click the <strong>Share</strong> button to invite collaborators by email — give editors "Editor" access and viewers "Viewer" access.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h3>Publish your sheet as a live CSV feed</h3>
-            <p>In Google Sheets: <strong>File → Share → Publish to web</strong>. Select your sheet tab, choose <code>Comma-separated values (.csv)</code>, and click <strong>Publish</strong>. Copy the URL it gives you.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <h3>Paste the URL here to sync live data</h3>
-            <p>Every time you click <strong>Sync Now</strong>, this tracker fetches the latest data from your sheet.</p>
-            <div class="url-row">
-              <input type="text" class="url-input" id="sheets-url" placeholder="https://docs.google.com/spreadsheets/d/…/pub?output=csv">
-              <button class="btn btn-primary btn-sm" onclick="syncFromSheets()">Sync Now</button>
-            </div>
-            <div class="import-status" id="import-status"></div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">5</div>
-          <div class="step-body">
-            <h3>Required column headers (row 1 of your sheet)</h3>
-            <p>Column order doesn't matter — the tracker matches by name. Use these exact headers:</p>
-            <table class="col-table">
-              <tbody><tr><th>Column header</th><th>Example value</th></tr>
-              <tr><td>Leader</td><td>James Loduca</td></tr>
-              <tr><td>Title</td><td>VP, Talent Acquisition</td></tr>
-              <tr><td>Level</td><td>L4</td></tr>
-              <tr><td>Event</td><td>Grace Hopper</td></tr>
-              <tr><td>Start Date</td><td>2026-10-27</td></tr>
-              <tr><td>End Date</td><td>2026-10-30</td></tr>
-              <tr><td>Location</td><td>Anaheim, CA</td></tr>
-              <tr><td>Local Hub</td><td>Bay Area</td></tr>
-              <tr><td>TA Staff</td><td>10</td></tr>
-              <tr><td>Biz Attendees</td><td>30000</td></tr>
-              <tr><td>Audience/Focus</td><td>Engineers, Data Scientists</td></tr>
-              <tr><td>Intuit Speakers</td><td>James Loduca</td></tr>
-              <tr><td>Status</td><td>Upcoming</td></tr>
-              <tr><td>Notes</td><td>Speaking on AI recruiting</td></tr>
-            </tbody></table>
-          </div>
-        </div>
-
-      </div>
-    </div>
   </div>
 </div>
 
