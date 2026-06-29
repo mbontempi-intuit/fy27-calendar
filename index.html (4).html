@@ -1,0 +1,1783 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FY27 Intuit Event Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────── */
+:root{
+  --navy:#07204F; --navy2:#0A2B6C; --navy3:#1A3F8F;
+  --blue:#1E6FE5; --blue-lt:#EBF3FF; --blue-mid:#4C8EEA;
+  --teal:#00C4B3; --teal-lt:#E5FAF8;
+  --green:#22C55E; --green-lt:#F0FDF4;
+  --amber:#F59E0B; --amber-lt:#FFFBEB;
+  --slate:#94A3B8; --slate-lt:#F8FAFC;
+  --bg:#EFF2F8; --surface:#FFFFFF; --surface2:#F7F9FC;
+  --border:#DDE4EF; --border2:#E8ECF3;
+  --t1:#0D1B2A; --t2:#4A5568; --t3:#8A95A3;
+  --r:8px; --r2:12px; --r3:16px;
+  --shadow-xs:0 1px 2px rgba(7,32,79,.06);
+  --shadow-sm:0 1px 4px rgba(7,32,79,.08),0 2px 8px rgba(7,32,79,.05);
+  --shadow:0 4px 16px rgba(7,32,79,.10),0 1px 4px rgba(7,32,79,.06);
+  --shadow-lg:0 16px 48px rgba(7,32,79,.18),0 4px 12px rgba(7,32,79,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;font-size:13px;}
+
+/* ── CHROME ─────────────────────────────────────────── */
+#chrome{position:sticky;top:0;z-index:80;}
+
+/* header */
+#hdr{
+  background:linear-gradient(100deg,var(--navy) 0%,var(--navy2) 55%,var(--navy3) 100%);
+  padding:0 28px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 0 rgba(0,196,179,.25),0 4px 16px rgba(7,32,79,.35);
+}
+.hdr-l{display:flex;align-items:center;gap:14px;}
+.wordmark{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11px;letter-spacing:.2em;color:var(--teal);text-transform:uppercase;background:rgba(0,196,179,.12);border:1px solid rgba(0,196,179,.22);padding:3px 8px;border-radius:5px;}
+.hdr-sep{width:1px;height:20px;background:rgba(255,255,255,.14);}
+#hdr h1{font-size:14.5px;font-weight:500;color:#fff;letter-spacing:-.01em;}
+.hdr-r{display:flex;align-items:center;gap:10px;}
+#last-updated{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(255,255,255,.38);letter-spacing:.05em;}
+
+/* stats bar */
+#sbar{
+  background:var(--navy2);
+  padding:0 28px;
+  display:flex;align-items:stretch;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.stat{display:flex;align-items:center;gap:10px;padding:11px 18px 11px 0;margin-right:18px;border-right:1px solid rgba(255,255,255,.09);}
+.stat:last-child{border-right:none;margin-right:0;}
+.stat-pip{width:3px;height:26px;border-radius:2px;flex-shrink:0;}
+.stat-val{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#fff;line-height:1;}
+.stat-lbl{font-size:9.5px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;line-height:1.2;}
+
+/* nav tabs */
+#nav{
+  background:var(--surface);
+  padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-xs);
+}
+.tabs{display:flex;}
+.tab{display:flex;align-items:center;gap:6px;padding:13px 18px;font-size:12.5px;font-weight:500;color:var(--t3);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:color .14s,border-color .14s;}
+.tab:hover{color:var(--t2);}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);}
+.tab svg{opacity:.65;}
+.tab.on svg{opacity:1;}
+.nav-actions{display:flex;gap:8px;padding:8px 0;}
+
+/* toolbar */
+#toolbar{background:var(--surface2);padding:11px 28px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--border2);}
+.search-wrap{position:relative;flex:1;min-width:180px;max-width:280px;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--t3);pointer-events:none;}
+.search-wrap input{width:100%;font-family:'Inter',sans-serif;font-size:12.5px;padding:8px 10px 8px 34px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--t1);outline:none;transition:border-color .14s,box-shadow .14s;}
+.search-wrap input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,111,229,.1);}
+.fsel{font-family:'Inter',sans-serif;font-size:12.5px;padding:8px 30px 8px 10px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--t1);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A95A3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color .14s;}
+.fsel:focus{border-color:var(--blue);}
+.toolbar-r{margin-left:auto;display:flex;gap:7px;align-items:center;}
+
+/* buttons */
+.btn{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;padding:7px 14px;border-radius:var(--r);border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .14s;white-space:nowrap;}
+.btn-primary{background:var(--blue);color:#fff;}
+.btn-primary:hover{background:#1560C8;box-shadow:0 2px 8px rgba(30,111,229,.3);}
+.btn-ghost{background:transparent;color:var(--t2);border:1.5px solid var(--border);}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+.btn-sm{padding:5px 11px;font-size:11.5px;}
+.btn-icon{width:30px;height:30px;padding:0;justify-content:center;background:transparent;color:var(--t3);border:1.5px solid transparent;border-radius:var(--r);}
+.btn-icon:hover{background:var(--bg);color:var(--blue);border-color:var(--border);}
+.btn-icon.danger:hover{color:#EF4444;border-color:#FECACA;background:#FEF2F2;}
+
+/* ── PANELS ─────────────────────────────────────────── */
+.panel{display:none;animation:fadeIn .18s ease;}
+.panel.on{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ── TABLE VIEW ─────────────────────────────────────── */
+#tbl-wrap{padding:20px 28px 36px;overflow-x:auto;}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow);table-layout:auto;}
+thead{background:var(--navy);}
+thead th{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:12px 12px;text-align:left;white-space:nowrap;cursor:pointer;user-select:none;transition:color .12s;border-right:1px solid rgba(255,255,255,.05);}
+thead th:last-child{border-right:none;cursor:default;}
+thead th:hover{color:rgba(255,255,255,.9);}
+thead th.sorted{color:var(--teal);}
+thead th .si{font-size:8px;margin-left:3px;opacity:.5;}
+thead th.sorted .si{opacity:1;}
+tbody tr{border-bottom:1px solid var(--border2);transition:background .1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:#F3F7FF;}
+td{padding:10px 12px;vertical-align:middle;}
+.lc{display:flex;align-items:center;gap:9px;}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:#fff;flex-shrink:0;}
+.ln{font-weight:500;font-size:12.5px;line-height:1.2;}
+.lt{font-size:10.5px;color:var(--t3);margin-top:1px;}
+.badge{display:inline-flex;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;letter-spacing:.04em;}
+.sdot{display:inline-flex;align-items:center;gap:5px;font-size:12px;white-space:nowrap;}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.du{background:var(--blue);}
+.dc{background:var(--green);}
+.dt{background:var(--amber);}
+.dcp{background:var(--slate);}
+.npill{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 6px;border-radius:5px;}
+.nps{background:var(--blue-lt);color:var(--blue);}
+.npb{background:var(--green-lt);color:#166534;}
+.hub-y{font-size:11px;font-weight:600;}
+.hub-n{color:var(--t3);}
+.tl{display:flex;flex-wrap:wrap;gap:3px;}
+.tag{font-size:10px;background:#F1F5F9;color:var(--t2);padding:2px 6px;border-radius:4px;white-space:nowrap;}
+.sc{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;background:#EEF2FF;color:#4338CA;padding:2px 6px;border-radius:4px;margin:2px;white-space:nowrap;}
+.dc2{font-family:'IBM Plex Mono',monospace;font-size:11px;white-space:nowrap;color:var(--t2);}
+.acts{display:flex;gap:3px;}
+.er td{text-align:center;padding:56px;color:var(--t3);font-size:13px;}
+
+/* ── CALENDAR VIEW ──────────────────────────────────── */
+#cal-wrap{padding:22px 28px 36px;}
+.cal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-title{font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--t1);}
+.cal-subtitle{font-size:11px;color:var(--t3);font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;margin-top:2px;}
+.cal-nav-btns{display:flex;gap:6px;}
+
+/* legend */
+.cal-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 14px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);margin-bottom:18px;font-size:11px;color:var(--t2);}
+.legend-group{display:flex;align-items:center;gap:10px;}
+.legend-sep{width:1px;height:14px;background:var(--border);}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10.5px;}
+.legend-pip{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.legend-pip.aud-swe{background:#DBEAFE;border:1px solid #BFDBFE;}
+.legend-pip.aud-data{background:#EDE9FE;border:1px solid #DDD6FE;}
+.legend-pip.aud-tpm{background:#FCE7F3;border:1px solid #FBCFE8;}
+.legend-pip.aud-product{background:#FEF3C7;border:1px solid #FDE68A;}
+.legend-pip.aud-security{background:#FEE2E2;border:1px solid #FECACA;}
+.legend-pip.aud-finance{background:#D1FAE5;border:1px solid #A7F3D0;}
+.legend-pip.aud-sales{background:#FFEDD5;border:1px solid #FED7AA;}
+
+/* months grid */
+.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:1200px){.months-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:860px){.months-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.months-grid{grid-template-columns:1fr;}}
+
+.month-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow-xs);}
+.month-hdr{background:var(--navy);padding:9px 13px;display:flex;align-items:center;justify-content:space-between;}
+.month-name{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:#fff;letter-spacing:.06em;text-transform:uppercase;}
+.month-count{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--teal);}
+
+/* day grid */
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);}
+.dow-cell{font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);text-align:center;padding:7px 2px 5px;border-bottom:1px solid var(--border2);}
+.day-cell{min-height:62px;padding:4px 3px 3px;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2);position:relative;overflow:hidden;}
+.day-cell:nth-child(7n){border-right:none;}
+/* remove bottom border on last row cells */
+.day-cell.last-row{border-bottom:none;}
+.day-cell.other-month .day-num{color:#CBD5E1;}
+.day-cell.other-month{background:#FAFBFD;}
+.day-num{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--t3);line-height:1;margin-bottom:3px;padding:1px 2px;}
+.day-cell.is-today .day-num{background:var(--blue);color:#fff;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-weight:600;}
+
+/* event chips on calendar */
+.chip{font-size:8.5px;font-weight:500;padding:1px 5px;border-radius:3px;margin-bottom:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:block;line-height:1.5;transition:opacity .12s,filter .12s;}
+.chip:hover{opacity:.8;filter:brightness(.97);}
+.chip-span-start{border-radius:3px 0 0 3px;padding-right:2px;}
+.chip-span-mid{border-radius:0;padding:1px 2px;}
+.chip-span-end{border-radius:0 3px 3px 0;padding-left:2px;}
+/* status chip colors */
+.chip-Upcoming{background:#DBEAFE;color:#1D4ED8;}
+.chip-Confirmed{background:#DCFCE7;color:#15803D;}
+.chip-Tentative{background:#FEF3C7;color:#92400E;}
+.chip-Completed{background:#F1F5F9;color:#475569;}
+/* Audience tag colors */
+.aud-swe{background:#DBEAFE;color:#1E40AF;border:1px solid #BFDBFE;}
+.aud-data{background:#EDE9FE;color:#5B21B6;border:1px solid #DDD6FE;}
+.aud-tpm{background:#FCE7F3;color:#9D174D;border:1px solid #FBCFE8;}
+.aud-product{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A;}
+.aud-security{background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;}
+.aud-finance{background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0;}
+.aud-sales{background:#FFEDD5;color:#9A3412;border:1px solid #FED7AA;}
+.aud-default{background:#F1F5F9;color:#475569;border:1px solid #E2E8F0;}
+.chip-more{font-size:8.5px;color:var(--blue);cursor:pointer;font-weight:500;padding:0 2px;}
+
+/* ── SHEETS PANEL ────────────────────────────────────── */
+.sheets-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);max-width:720px;}
+.sheets-hero{background:linear-gradient(110deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--r2) var(--r2) 0 0;padding:24px 28px;display:flex;align-items:center;gap:18px;}
+.sheets-hero-icon{width:48px;height:48px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sheets-hero h2{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.01em;margin-bottom:4px;}
+.sheets-hero p{font-size:12.5px;color:rgba(255,255,255,.6);}
+.steps{padding:28px;}
+.step{display:flex;gap:16px;margin-bottom:28px;}
+.step:last-child{margin-bottom:0;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-body h3{font-size:13.5px;font-weight:600;margin-bottom:5px;color:var(--t1);}
+.step-body p{font-size:12.5px;color:var(--t2);line-height:1.6;}
+.step-body a{color:var(--blue);text-decoration:none;}
+.step-body a:hover{text-decoration:underline;}
+code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--bg);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:var(--t1);}
+.url-row{display:flex;gap:8px;margin-top:10px;}
+.url-input{flex:1;font-family:'IBM Plex Mono',monospace;font-size:11.5px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 10px;background:var(--bg);color:var(--t1);outline:none;transition:border-color .14s;}
+.url-input:focus{border-color:var(--blue);background:var(--surface);}
+
+.import-status{margin-top:12px;font-size:12px;display:none;}
+.import-status.show{display:block;}
+.import-ok{color:#15803D;background:var(--green-lt);border:1px solid #BBF7D0;padding:7px 12px;border-radius:var(--r);}
+.import-err{color:#991B1B;background:#FEF2F2;border:1px solid #FECACA;padding:7px 12px;border-radius:var(--r);}
+
+/* ── MODALS ─────────────────────────────────────────── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(7,32,79,.5);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:var(--r3);width:660px;max-width:calc(100vw - 32px);max-height:92vh;overflow-y:auto;box-shadow:var(--shadow-lg);}
+.mhdr{padding:22px 26px 18px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;}
+.mhdr h2{font-size:15.5px;font-weight:700;letter-spacing:-.01em;}
+.mcls{width:30px;height:30px;border:none;background:var(--bg);border-radius:7px;cursor:pointer;font-size:18px;color:var(--t3);display:flex;align-items:center;justify-content:center;transition:all .12s;}
+.mcls:hover{color:var(--t1);background:var(--border);}
+.mbdy{padding:22px 26px;}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ff{display:flex;flex-direction:column;gap:5px;}
+.ff.full{grid-column:1/-1;}
+.ff label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);}
+.mi,.ms{font-family:'Inter',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:var(--r);padding:8px 11px;background:var(--bg);color:var(--t1);outline:none;width:100%;transition:border-color .14s,box-shadow .14s;}
+.mi:focus,.ms:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,111,229,.1);background:var(--surface);}
+textarea.mi{resize:vertical;min-height:60px;}
+.ms{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A95A3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.mftr{padding:14px 26px 22px;display:flex;gap:9px;justify-content:flex-end;border-top:1px solid var(--border2);}
+
+/* detail modal */
+.detail-hero{padding:24px 26px 20px;display:flex;align-items:flex-start;gap:16px;}
+.detail-av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;color:#fff;flex-shrink:0;}
+.detail-title{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:5px;}
+.detail-sub{font-size:12.5px;color:var(--t2);}
+.detail-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.detail-body{padding:0 26px 24px;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.detail-field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:5px;}
+.detail-field .val{font-size:13px;color:var(--t1);}
+.detail-actions{display:flex;gap:8px;justify-content:flex-end;padding:0 26px 22px;}
+
+/* toast */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;font-size:12.5px;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity .25s;z-index:300;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+.toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- ══ CHROME ══════════════════════════════════════════ -->
+<div id="chrome">
+
+  <!-- header -->
+  <div id="hdr">
+    <div class="hdr-l">
+      <span class="wordmark">Intuit</span>
+      <div class="hdr-sep"></div>
+      <h1>FY27 Intuit Event Calendar</h1>
+    </div>
+    <div class="hdr-r">
+      <span id="last-updated">Updated Jun 29, 2026</span>
+    </div>
+  </div>
+
+  <!-- stats bar -->
+  <div id="sbar">
+    <div class="stat"><div class="stat-pip" style="background:var(--blue)"></div><div><div class="stat-val" id="s-total">21</div><div class="stat-lbl">Events</div></div></div>
+    <div class="stat"><div class="stat-pip" style="background:var(--teal)"></div><div><div class="stat-val" id="s-ta">64</div><div class="stat-lbl">TA Seats</div></div></div>
+    <div class="stat"><div class="stat-pip" style="background:var(--green)"></div><div><div class="stat-val" id="s-leaders">2</div><div class="stat-lbl">Leaders</div></div></div>
+    <div class="stat"><div class="stat-pip" style="background:var(--amber)"></div><div><div class="stat-val" id="s-up">20</div><div class="stat-lbl">Upcoming</div></div></div>
+    <div class="stat"><div class="stat-pip" style="background:#A78BFA)"></div><div><div class="stat-val" id="s-att">61K</div><div class="stat-lbl">Attendees</div></div></div>
+  </div>
+
+  <!-- tabs -->
+  <div id="nav">
+    <div class="tabs">
+      <button class="tab on" id="tab-table" onclick="switchTab('table')">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="3" rx="1" stroke="currentColor" stroke-width="1.3"></rect><rect x="1" y="6" width="12" height="3" rx="1" stroke="currentColor" stroke-width="1.3"></rect><rect x="1" y="11" width="12" height="2" rx="1" stroke="currentColor" stroke-width="1.3"></rect></svg>
+        Table
+      </button>
+      <button class="tab" id="tab-cal" onclick="switchTab('cal')">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10.5" rx="1.5" stroke="currentColor" stroke-width="1.3"></rect><path d="M1 5.5h12M4.5 1v3M9.5 1v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        Calendar  <span style="font-size:9.5px;opacity:.6;margin-left:2px;font-family:'IBM Plex Mono',monospace;">Aug 2026–Jul 2027</span>
+      </button>
+      <button class="tab" id="tab-signup" onclick="switchTab('signup')">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M7 1a3 3 0 100 6A3 3 0 007 1zM2 12c0-2.21 2.24-4 5-4s5 1.79 5 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path><path d="M11 6v4M13 8h-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"></path></svg>
+        Recruiter Sign-Up
+      </button>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm" onclick="resetToDefaults()" title="Wipe saved edits and restore original data">↺ Reset</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6.5l3 3 3-3M2.5 10.5v2h9v-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Export CSV
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="saveAsFile()" title="Download an updated copy of this file with your edits baked in">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6.5l3 3 3-3M2.5 10.5v2h9v-2" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Save File
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Add Event</button>
+    </div>
+  </div>
+
+  <!-- filter toolbar -->
+  <div id="toolbar">
+    <div class="search-wrap">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.4"></circle><path d="M9.5 9.5L12.5 12.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+      <input type="text" id="search" placeholder="Search events, leaders, locations…">
+    </div>
+    <select class="fsel" id="f-region"><option value="">All Regions</option><option>US</option><option>Europe</option></select>
+    <select class="fsel" id="f-status"><option value="">All Statuses</option><option>Upcoming</option><option>Confirmed</option><option>Tentative</option><option>Completed</option></select>
+    <select class="fsel" id="f-hub"><option value="">All Hubs</option><option>ATL</option><option>Bay Area</option><option>Dallas</option><option>NYC</option></select>
+    <button class="btn btn-ghost btn-sm toolbar-r" onclick="clearFilters()">Clear</button>
+  </div>
+
+</div><!-- /chrome -->
+
+<!-- sync banner -->
+<div id="sync-banner" style="display: none; background: rgb(235, 243, 255); border-bottom: 1px solid rgb(191, 219, 254); padding: 8px 28px; align-items: center; gap: 10px; font-size: 12.5px; color: rgb(29, 78, 216);">⏳ Loading latest data from Google Sheet…</div>
+<div id="unsaved-banner" style="display: flex; background: rgb(254, 243, 199); border-bottom: 1px solid rgb(253, 230, 138); padding: 9px 28px; align-items: center; gap: 12px; font-size: 12.5px; color: rgb(146, 64, 14);">
+  <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"></circle><path d="M10 6v5M10 14v.5" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"></path></svg>
+  <span><strong>Saving to Google Sheet…</strong> If this persists, check your connection.</span>
+  <button class="btn btn-sm" onclick="saveAsFile()" style="background:#F59E0B;color:#fff;border:none;margin-left:4px;">⬇ Save &amp; Download</button>
+  <button onclick="markSaved()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#92400E;font-size:18px;line-height:1;">×</button>
+</div>
+
+<!-- ══ TABLE PANEL ══════════════════════════════════════ -->
+<div class="panel on" id="panel-table">
+  <div id="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th onclick="sortBy('date')" id="th-date">Date<span class="si">↕</span></th>
+        <th onclick="sortBy('region')" id="th-region">Region<span class="si">↕</span></th>
+        <th onclick="sortBy('leader')" id="th-leader">Business POC / BU<span class="si">↕</span></th>
+        <th onclick="sortBy('event')" id="th-event">Event / Conference<span class="si">↕</span></th>
+        <th onclick="sortBy('location')" id="th-location">Location<span class="si">↕</span></th>
+        <th>Hub</th>
+        <th>One-Line</th>
+        <th onclick="sortBy('taStaff')" id="th-taStaff">TA Staff<span class="si">↕</span></th>
+        <th onclick="sortBy('taContact')" id="th-taContact">TA Contact<span class="si">↕</span></th>
+        <th onclick="sortBy('bizAttendees')" id="th-bizAttendees">Attendees<span class="si">↕</span></th>
+        <th>Audience</th>
+        <th>Speakers</th>
+        <th onclick="sortBy('status')" id="th-status">Status<span class="si">↕</span></th>
+        <th>CFP Link</th>
+        <th>CFP Deadline</th>
+        <th>Notes</th>
+        <th></th>
+      </tr></thead>
+      <tbody id="tbody"><tr>
+    <td><span class="dc2">Jun 23–25</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(27)">Real World AI Security (RWAISec)</td>
+    <td style="white-space:nowrap;color:var(--t2)">Stanford, CA</td>
+    <td><span class="hub-y" style="color:#2563EB">✓ Bay Area</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Curates year's most impactful real-world AI-security attacks/defenses from BH/DEFCON/RSAC + top academic venues</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span class="sc">🎤 Itsik Mantin</span><span class="sc">🎤 Abhi Srivastava</span></td>
+    <td><span class="sdot"><span class="dot dcp"></span>Completed</span></td>
+    <td style="min-width:100px"><a href="https://invite/curated" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">invite/curated</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">—</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Sponsorship + Itsik Mantin attending and Abhi Srivastava | Just concluded Data Security Researchers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(27)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(27)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 1–2</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(28)">Berkeley Agentic AI Summit</td>
+    <td style="white-space:nowrap;color:var(--t2)">UC Berkeley, CA</td>
+    <td><span class="hub-y" style="color:#2563EB">✓ Bay Area</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Agentic AI full-stack; dedicated safety/security track</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span class="sc">🎤 Itsik Mantin</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://rdi.berkeley.edu" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">rdi.berkeley.edu</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">Closed (~Apr 15, 2026)</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Itsik Mantin presenting Data, Safety, Security Researchers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(28)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(28)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 1–6</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(37)">Black Hat USA</td>
+    <td style="white-space:nowrap;color:var(--t2)">Las Vegas, NV</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Premier industry research disclosures; strong AI-security + AI Summit</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://blackhat.com/call-for-papers" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">blackhat.com/call-for-papers</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">Passed (~Dec 11, 2025)</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Briefings Aug 5–6 Security Researchers, Industry Practitioners</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(37)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(37)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 6–9</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(33)">DEF CON 34 — AI Village</td>
+    <td style="white-space:nowrap;color:var(--t2)">Las Vegas, NV</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">No-BS practical AI security: prompt injection, AI red-team workshops, GRT</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://aivillage.org" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">aivillage.org</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">check village site</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">AI Security, Hackers, Researchers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(33)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(33)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 6–9</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(34)">DEF CON 34 — AppSec Village</td>
+    <td style="white-space:nowrap;color:var(--t2)">Las Vegas, NV</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Attacker-minded AppSec (incl. AI security, supply chain); Fix-the-Flag CTF</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://sessionize.com/appsec-village-def-con-34" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">sessionize.com/appsec-village-def-con-34</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">Apr 1–May 31, 2026 (passed)</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">AppSec, AI Security, Supply Chain</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(34)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(34)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 6–9</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(35)">DEF CON 34 (parent)</td>
+    <td style="white-space:nowrap;color:var(--t2)">Las Vegas, NV</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">World's largest hacker con; theme "Agency"</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://defcon.org (open calls)" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">defcon.org (open calls)</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">varies by track</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Security Researchers, Hackers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(35)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(35)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 12–13</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(12)">RenderATL</td>
+    <td style="white-space:nowrap;color:var(--t2)">Atlanta, GA</td>
+    <td><span class="hub-y" style="color:#16A34A">✓ ATL</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">8</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">5K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-product">Product/Design</span><span class="tag aud-sales">Sales</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(12)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(12)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Sep 17–18</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(31)">AI-security workshop @ ESORICS</td>
+    <td style="white-space:nowrap;color:var(--t2)">Rome, IT</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">European AI-security workshop co-located w/ ESORICS</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://sec-deadlines.github.io" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">sec-deadlines.github.io</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">~Jun 17, 2026 (passed)</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Data Security Researchers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(31)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(31)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Sep 23–25</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(16)">NBMBAA Conference</td>
+    <td style="white-space:nowrap;color:var(--t2)">Los Angeles, CA</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">3K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-finance">MBA</span><span class="tag aud-finance">Finance</span><span class="tag aud-sales">Sales</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(16)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(16)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Oct 1</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(17)">Women in Product</td>
+    <td style="white-space:nowrap;color:var(--t2)">Santa Clara, CA</td>
+    <td><span class="hub-y" style="color:#2563EB">✓ Bay Area</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">1K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-tpm">TPM</span><span class="tag aud-product">Product/Design</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(17)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(17)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Oct 5–8</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(18)">Tech Futures</td>
+    <td style="white-space:nowrap;color:var(--t2)">New York, NY</td>
+    <td><span class="hub-y" style="color:#7C3AED">✓ NYC</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">4K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-swe">Tech Leaders</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">LGBTQ+ pipeline</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(18)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(18)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Oct 11–13</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(19)">Thrive Conference</td>
+    <td style="white-space:nowrap;color:var(--t2)">Dallas, TX</td>
+    <td><span class="hub-y" style="color:#D97706">✓ Dallas</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">2K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-product">Product/Design</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(19)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(19)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Oct 27–30</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(13)">Grace Hopper</td>
+    <td style="white-space:nowrap;color:var(--t2)">Anaheim, CA</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">10</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">30K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-data">Data</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(13)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(13)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Oct 28–30</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(20)">Latinas in Tech @ SHPE</td>
+    <td style="white-space:nowrap;color:var(--t2)">Indianapolis, IN</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">2K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-product">Product/Design</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(20)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(20)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Nov 2–6</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(14)">AfroTech</td>
+    <td style="white-space:nowrap;color:var(--t2)">Houston, TX</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">10</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">10K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-data">Data</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(14)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(14)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Nov 15–19</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EDE9FE;color:#5B21B6">Europe</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(30)">ACM AISec (workshop @ CCS)</td>
+    <td style="white-space:nowrap;color:var(--t2)">The Hague, NL</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Canonical academic AI/ML-security workshop, 19th ed.</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://aisec.cc" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">aisec.cc</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">Jul 24, 2026 (firm)</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Data Security Researchers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(30)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(30)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Nov 19–20</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(15)">BFUTR</td>
+    <td style="white-space:nowrap;color:var(--t2)">Toronto, ON</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">8</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">3K</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-data">Data</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">—</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(15)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(15)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2">Aug 5–8</span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(36)">DEF CON 35</td>
+    <td style="white-space:nowrap;color:var(--t2)">Las Vegas, NV</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Next edition</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-security">Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot du"></span>Upcoming</span></td>
+    <td style="min-width:100px"><a href="https://TBA" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">TBA</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">TBA</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Save-the-date  Security Researchers, Hackers</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(36)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(36)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2"><span style="color:var(--t3)">TBD</span></span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(21)">ALPFA Conference</td>
+    <td style="white-space:nowrap;color:var(--t2)">Bay Area, CA</td>
+    <td><span class="hub-y" style="color:#2563EB">✓ Bay Area</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Fintech, SWE, TPM, Product/Design</td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill npb">2K</span></td>
+    <td style="min-width:130px">—</td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot dt"></span>Tentative</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Date TBD – Oct timeframe Fintech Analysts, TPM, Tech</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(21)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(21)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2"><span style="color:var(--t3)">TBD</span></span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">JL</div><div><div class="ln">James Loduca</div><div class="lt">VP of D &amp; I</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(22)">Fleurix Conference</td>
+    <td style="white-space:nowrap;color:var(--t2)">TBD</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)"><span style="color:var(--t3)">—</span></td>
+    <td><span class="npill nps">4</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-swe">SWE</span><span class="tag aud-product">Product/Design</span><span class="tag aud-tpm">TPM</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot dt"></span>Tentative</span></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px"><span style="color:var(--t3)">—</span></td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">Date and location TBD</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(22)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(22)" title="Delete">🗑</button>
+    </div></td>
+  </tr><tr>
+    <td><span class="dc2"><span style="color:var(--t3)">TBD</span></span></td>
+    <td><span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:#EBF3FF;color:#1D4ED8">US</span></td>
+    <td><div class="lc"><div class="av">IM</div><div><div class="ln">Itsik Mantin</div><div class="lt">DE CTREC</div></div></div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(32)">CAMLIS</td>
+    <td style="white-space:nowrap;color:var(--t2)">Arlington, VA</td>
+    <td><span class="hub-n">—</span></td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">Applied ML in infosec; practitioner-heavy</td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="font-size:11.5px;white-space:nowrap"><span style="color:var(--t3)">—</span></td>
+    <td><span style="color:var(--t3)">—</span></td>
+    <td style="min-width:130px"><div class="tl"><span class="tag aud-data">Data Security</span></div></td>
+    <td style="min-width:100px"><span style="color:var(--t3)">—</span></td>
+    <td><span class="sdot"><span class="dot dt"></span>Tentative</span></td>
+    <td style="min-width:100px"><a href="https://camlis.org" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">camlis.org</a></td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">TBA</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">TBA 2026 (hist. Oct) Data in InfoSec Practitioners</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(32)" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(32)" title="Delete">🗑</button>
+    </div></td>
+  </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ CALENDAR PANEL ════════════════════════════════════ -->
+<div class="panel" id="panel-cal">
+  <div id="cal-wrap">
+    <div class="cal-top">
+      <div>
+        <div class="cal-title">FY27 Intuit Event Calendar</div>
+        <div class="cal-subtitle">AUG 2026 → JUL 2027</div>
+      </div>
+    </div>
+
+    <div class="cal-legend">
+      <div class="legend-group">
+        <span style="font-size:10.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;">Audience</span>
+        <span class="legend-item"><span class="legend-pip aud-swe" style="border-radius:3px"></span>SWE</span>
+        <span class="legend-item"><span class="legend-pip aud-data" style="border-radius:3px"></span>Data</span>
+        <span class="legend-item"><span class="legend-pip aud-tpm" style="border-radius:3px"></span>TPM</span>
+        <span class="legend-item"><span class="legend-pip aud-product" style="border-radius:3px"></span>Product/Design</span>
+        <span class="legend-item"><span class="legend-pip aud-security" style="border-radius:3px"></span>Security</span>
+        <span class="legend-item"><span class="legend-pip aud-finance" style="border-radius:3px"></span>Finance / MBA</span>
+        <span class="legend-item"><span class="legend-pip aud-sales" style="border-radius:3px"></span>Sales</span>
+      </div>
+      <div class="legend-sep"></div>
+      <div class="legend-group">
+        <span style="font-size:10.5px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;">Status dot</span>
+        <span class="legend-item"><span class="dot" style="background:#3B82F6"></span>Upcoming</span>
+        <span class="legend-item"><span class="dot" style="background:#22C55E"></span>Confirmed</span>
+        <span class="legend-item"><span class="dot" style="background:#F59E0B"></span>Tentative</span>
+        <span class="legend-item"><span class="dot" style="background:#94A3B8"></span>Completed</span>
+      </div>
+      <div class="legend-sep"></div>
+      <span style="font-size:10.5px;color:var(--t3);">Click any event to view details</span>
+    </div>
+
+    <div class="months-grid" id="months-grid"></div>
+  </div>
+</div>
+
+<!-- ══ ADD/EDIT MODAL ════════════════════════════════════ -->
+<div class="overlay" id="edit-modal" onclick="overlayClick(event,'edit-modal')">
+  <div class="modal">
+    <div class="mhdr"><h2 id="modal-title">Edit Event</h2><button class="mcls" onclick="closeModal('edit-modal')">×</button></div>
+    <div class="mbdy">
+      <div class="fgrid">
+        <div class="ff"><label>Region</label><select class="ms" id="f-region-m"><option value="">—</option><option>US</option><option>Europe</option></select></div>
+        <div class="ff"><label>Leader Name</label><input type="text" class="mi" id="f-leader" placeholder="e.g. James Loduca"></div>
+        <div class="ff"><label>Title / Role</label><input type="text" class="mi" id="f-title" placeholder="e.g. CEO"></div>
+        <div class="ff"><label>Status</label><select class="ms" id="f-status-m"><option>Upcoming</option><option>Confirmed</option><option>Tentative</option><option>Completed</option></select></div>
+        <div class="ff full"><label>Event / Conference Name *</label><input type="text" class="mi" id="f-event" placeholder="e.g. Grace Hopper Celebration"></div>
+        <div class="ff"><label>Start Date</label><input type="date" class="mi" id="f-ds"></div>
+        <div class="ff"><label>End Date</label><input type="date" class="mi" id="f-de"></div>
+        <div class="ff full"><label>Location</label><input type="text" class="mi" id="f-loc" placeholder="e.g. Atlanta, GA"></div>
+        <div class="ff"><label>Local Hub</label><select class="ms" id="f-hub-m"><option value="">None</option><option>ATL</option><option>Bay Area</option><option>Dallas</option><option>NYC</option></select></div>
+        <div class="ff"><label>TA Staff Needed</label><input type="number" class="mi" id="f-ta" placeholder="e.g. 8" min="0"></div>
+        <div class="ff"><label>TA Contact</label><input type="text" class="mi" id="f-tacontact" placeholder="e.g. Jordan Smith"></div>
+        <div class="ff"><label>Est. Biz Attendees</label><input type="number" class="mi" id="f-biz" placeholder="e.g. 5000" min="0"></div>
+        <div class="ff full"><label>One-Line Description</label><input type="text" class="mi" id="f-oneline" placeholder="e.g. Premier academic secure &amp; trustworthy ML conf"></div>
+        <div class="ff full"><label>Audience / Focus</label><input type="text" class="mi" id="f-aud" placeholder="e.g. Engineers, Data Scientists, PMs"></div>
+        <div class="ff full"><label>Intuit Speakers (comma-separated)</label><input type="text" class="mi" id="f-spk" placeholder="e.g. Itsik Mantin, Alex Chriss"></div>
+        <div class="ff"><label>CFP Link</label><input type="text" class="mi" id="f-cfplink" placeholder="e.g. blackhat.com/call-for-papers"></div>
+        <div class="ff"><label>CFP Deadline</label><input type="text" class="mi" id="f-cfpdeadline" placeholder="e.g. Jul 24, 2026 (firm)"></div>
+        <div class="ff full"><label>Notes</label><textarea class="mi" id="f-notes" placeholder="Speaking topic, travel confirmed…"></textarea></div>
+      </div>
+    </div>
+    <div class="mftr">
+      <button class="btn btn-ghost" onclick="closeModal('edit-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL MODAL ══════════════════════════════════════ -->
+<div class="overlay" id="detail-modal" onclick="overlayClick(event,'detail-modal')">
+  <div class="modal" id="detail-modal-inner"></div>
+</div>
+
+<!-- toast -->
+<div class="toast" id="toast">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="#22C55E"></circle><path d="M4.5 7l2 2 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  <span id="toast-msg">Event updated — click ⬇ Save &amp; Download to keep it</span>
+</div>
+
+<script>
+/* ══ DATA ═══════════════════════════════════════════════ */
+const SEED = [
+  {"id":12,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"RenderATL","dateStart":"2026-08-12","dateEnd":"2026-08-13","location":"Atlanta, GA","hub":"ATL","taStaff":8,"bizAttendees":5000,"status":"Upcoming","audience":"SWE, Product/Design, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":13,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Grace Hopper","dateStart":"2026-10-27","dateEnd":"2026-10-30","location":"Anaheim, CA","hub":"","taStaff":10,"bizAttendees":30000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":14,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"AfroTech","dateStart":"2026-11-02","dateEnd":"2026-11-06","location":"Houston, TX","hub":"","taStaff":10,"bizAttendees":10000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":15,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"BFUTR","dateStart":"2026-11-19","dateEnd":"2026-11-20","location":"Toronto, ON","hub":"","taStaff":8,"bizAttendees":2500,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":16,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"NBMBAA Conference","dateStart":"2026-09-23","dateEnd":"2026-09-25","location":"Los Angeles, CA","hub":"","taStaff":4,"bizAttendees":3000,"status":"Upcoming","audience":"MBA, Finance, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":17,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Women in Product","dateStart":"2026-10-01","dateEnd":"2026-10-01","location":"Santa Clara, CA","hub":"Bay Area","taStaff":4,"bizAttendees":1200,"status":"Upcoming","audience":"TPM, Product/Design","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":18,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Tech Futures","dateStart":"2026-10-05","dateEnd":"2026-10-08","location":"New York, NY","hub":"NYC","taStaff":4,"bizAttendees":4000,"status":"Upcoming","audience":"SWE, Tech Leaders","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"LGBTQ+ pipeline"},
+  {"id":19,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Thrive Conference","dateStart":"2026-10-11","dateEnd":"2026-10-13","location":"Dallas, TX","hub":"Dallas","taStaff":4,"bizAttendees":2000,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":20,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Latinas in Tech @ SHPE","dateStart":"2026-10-28","dateEnd":"2026-10-30","location":"Indianapolis, IN","hub":"","taStaff":4,"bizAttendees":1500,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":21,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"ALPFA Conference","dateStart":"","dateEnd":"","location":"Bay Area, CA","hub":"Bay Area","taStaff":4,"bizAttendees":2000,"status":"Tentative","audience":"","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"Fintech, SWE, TPM, Product/Design","notes":"Date TBD – Oct timeframe Fintech Analysts, TPM, Tech"},
+  {"id":22,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Fleurix Conference","dateStart":"","dateEnd":"","location":"TBD","hub":"","taStaff":4,"bizAttendees":0,"status":"Tentative","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"Date and location TBD"},
+  {"id":27,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Real World AI Security (RWAISec)","dateStart":"2026-06-23","dateEnd":"2026-06-25","location":"Stanford, CA","hub":"Bay Area","taStaff":0,"bizAttendees":0,"status":"Completed","audience":"Security","speakers":"Itsik Mantin, Abhi Srivastava","cfpLink":"invite/curated","cfpDeadline":"—","oneLine":"Curates year's most impactful real-world AI-security attacks/defenses from BH/DEFCON/RSAC + top academic venues","notes":"Sponsorship + Itsik Mantin attending and Abhi Srivastava | Just concluded Data Security Researchers"},
+  {"id":28,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Berkeley Agentic AI Summit","dateStart":"2026-08-01","dateEnd":"2026-08-02","location":"UC Berkeley, CA","hub":"Bay Area","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"Itsik Mantin","cfpLink":"rdi.berkeley.edu","cfpDeadline":"Closed (~Apr 15, 2026)","oneLine":"Agentic AI full-stack; dedicated safety/security track","notes":"Itsik Mantin presenting Data, Safety, Security Researchers"},
+  {"id":30,"region":"Europe","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"ACM AISec (workshop @ CCS)","dateStart":"2026-11-15","dateEnd":"2026-11-19","location":"The Hague, NL","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aisec.cc","cfpDeadline":"Jul 24, 2026 (firm)","oneLine":"Canonical academic AI/ML-security workshop, 19th ed.","notes":"Data Security Researchers"},
+  {"id":31,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"AI-security workshop @ ESORICS","dateStart":"2026-09-17","dateEnd":"2026-09-18","location":"Rome, IT","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sec-deadlines.github.io","cfpDeadline":"~Jun 17, 2026 (passed)","oneLine":"European AI-security workshop co-located w/ ESORICS","notes":"Data Security Researchers"},
+  {"id":32,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"CAMLIS","dateStart":"","dateEnd":"","location":"Arlington, VA","hub":"","taStaff":0,"bizAttendees":0,"status":"Tentative","audience":"Data Security","speakers":"","cfpLink":"camlis.org","cfpDeadline":"TBA","oneLine":"Applied ML in infosec; practitioner-heavy","notes":"TBA 2026 (hist. Oct) Data in InfoSec Practitioners"},
+  {"id":33,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AI Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aivillage.org","cfpDeadline":"check village site","oneLine":"No-BS practical AI security: prompt injection, AI red-team workshops, GRT","notes":"AI Security, Hackers, Researchers"},
+  {"id":34,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AppSec Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sessionize.com/appsec-village-def-con-34","cfpDeadline":"Apr 1–May 31, 2026 (passed)","oneLine":"Attacker-minded AppSec (incl. AI security, supply chain); Fix-the-Flag CTF","notes":"AppSec, AI Security, Supply Chain"},
+  {"id":35,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 (parent)","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"defcon.org (open calls)","cfpDeadline":"varies by track","oneLine":"World's largest hacker con; theme \"Agency\"","notes":"Security Researchers, Hackers"},
+  {"id":36,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 35","dateStart":"2027-08-05","dateEnd":"2027-08-08","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"TBA","cfpDeadline":"TBA","oneLine":"Next edition","notes":"Save-the-date  Security Researchers, Hackers"},
+  {"id":37,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Black Hat USA","dateStart":"2026-08-01","dateEnd":"2026-08-06","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"blackhat.com/call-for-papers","cfpDeadline":"Passed (~Dec 11, 2025)","oneLine":"Premier industry research disclosures; strong AI-security + AI Summit","notes":"Briefings Aug 5–6 Security Researchers, Industry Practitioners"}
+];
+
+const SHEET_ID = "intuit-tracker-v8";
+const WEBHOOK = "https://script.google.com/a/macros/intuit.com/s/AKfycbyWZ_LJxo744kQljgxXqD568-TvhM76bdWOjBcs5YQg4uT5KRMtIvD7YuoQeaFGIAkwOg/exec";
+
+/* ── Push events to Google Sheet ── */
+async function save(){
+  markUnsaved();
+  try{
+    await fetch(WEBHOOK, {
+      method:'POST',
+      body: JSON.stringify({type:'events', rows:events}),
+      headers:{'Content-Type':'application/json'}
+    });
+    markSaved();
+    toast('✓ Auto-saved to Google Sheet');
+  } catch(e){
+    // Fallback to localStorage if fetch fails
+    try{ localStorage.setItem(SHEET_ID, JSON.stringify(events)); }catch(ex){}
+    toast('⚠ Saved locally — check your connection');
+  }
+}
+
+/* ── Load events from Google Sheet on startup ── */
+async function loadEvents(){
+  showSyncBanner('Loading latest data from Google Sheet…');
+  try{
+    const res = await fetch(WEBHOOK+'?type=events');
+    const data = await res.json();
+    if(Array.isArray(data) && data.length){
+      hideSyncBanner();
+      // Normalize types from sheet (numbers come back as strings)
+      return data.map((e,i)=>({
+        ...e,
+        id: parseInt(e.id)||i+1,
+        taStaff: parseInt(e.taStaff)||0,
+        bizAttendees: parseInt(e.bizAttendees)||0,
+      }));
+    }
+  } catch(ex){}
+  // Fallback: localStorage then SEED
+  hideSyncBanner();
+  try{
+    const raw = localStorage.getItem(SHEET_ID);
+    if(raw){ const p=JSON.parse(raw); if(Array.isArray(p)&&p.length) return p; }
+  }catch(e){}
+  return SEED.map(e=>({...e}));
+}
+
+function showSyncBanner(msg){
+  let b = document.getElementById('sync-banner');
+  if(!b) return;
+  b.textContent = '⏳ '+msg;
+  b.style.display = 'flex';
+}
+function hideSyncBanner(){
+  const b = document.getElementById('sync-banner');
+  if(b) b.style.display = 'none';
+}
+
+/* ── Self-save: regenerate the HTML file with current events baked in ── */
+function saveAsFile(){
+  // Grab the full HTML source, find the SEED array, and replace it with current events
+  const src = document.documentElement.outerHTML;
+  // Serialize current events as compact JSON lines matching our SEED style
+  const seedLines = events.map(e => '  '+JSON.stringify(e)).join(',\n');
+  const newSeed = 'const SEED = [\n' + seedLines + '\n];';
+  // Replace the existing SEED block (from "const SEED = [" to "];")
+  const updated = src.replace(/const SEED = \[[\s\S]*?\];/, newSeed)
+                      // Also clear the unsaved banner if present
+                      .replace(/id="unsaved-banner" style="display:none"/g, 'id="unsaved-banner" style="display:none"');
+  const blob = new Blob([updated], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'intuit-leadership-tracker-v3.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  markSaved();
+  toast('✓ Saved! Replace your file with the downloaded copy.');
+}
+
+let _unsaved = false;
+function markUnsaved(){
+  _unsaved = true;
+  const b = document.getElementById('unsaved-banner');
+  if(b) b.style.display = 'flex';
+}
+function markSaved(){
+  _unsaved = false;
+  const b = document.getElementById('unsaved-banner');
+  if(b) b.style.display = 'none';
+}
+window.addEventListener('beforeunload', e => {
+  if(_unsaved){ e.preventDefault(); e.returnValue = ''; }
+});
+
+let events = SEED.map(e=>({...e})); // temporary until sheet loads
+let nextId = Math.max(27,...events.map(e=>e.id||0))+1;
+let editId = null, sortKey = "date", sortAsc = true;
+let F = {search:"", region:"", status:"", hub:""};
+
+/* ══ FILTER / SORT ══════════════════════════════════════ */
+document.getElementById("search").addEventListener("input", e=>{F.search=e.target.value.toLowerCase();render();});
+["f-region","f-status","f-hub"].forEach(id=>document.getElementById(id).addEventListener("change",e=>{F[id.slice(2)]=e.target.value;render();}));
+function clearFilters(){F={search:"",region:"",level:"",status:"",hub:""};document.getElementById("search").value="";["f-region","f-status","f-hub"].forEach(id=>document.getElementById(id).value="");render();}
+
+function filtered(){
+  return events.filter(e=>{
+    if(F.search&&!(e.leader+e.event+e.location+e.audience+e.speakers+e.notes+e.oneLine).toLowerCase().includes(F.search))return false;
+    if(F.region&&e.region!==F.region)return false;
+    if(F.status&&e.status!==F.status)return false;
+    if(F.hub&&e.hub!==F.hub)return false;
+    return true;
+  });
+}
+
+function sortBy(k){
+  if(sortKey===k)sortAsc=!sortAsc;else{sortKey=k;sortAsc=true;}
+  document.querySelectorAll('thead th').forEach(t=>t.classList.remove('sorted'));
+  const th=document.getElementById('th-'+k);if(th)th.classList.add('sorted');
+  render();
+}
+
+function sorted(data){
+  return[...data].sort((a,b)=>{
+    let va,vb;
+    if(sortKey==="date"){va=a.dateStart||"9999";vb=b.dateStart||"9999";}
+    else if(sortKey==="taStaff"||sortKey==="bizAttendees"){va=a[sortKey]||0;vb=b[sortKey]||0;}
+    else{va=a[sortKey]||"";vb=b[sortKey]||"";}
+    if(va<vb)return sortAsc?-1:1;
+    if(va>vb)return sortAsc?1:-1;
+    return 0;
+  });
+}
+
+/* ══ HELPERS ════════════════════════════════════════════ */
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOWS = ["Su","Mo","Tu","We","Th","Fr","Sa"];
+const HUB_COLOR = {ATL:"#16A34A","Bay Area":"#2563EB",Dallas:"#D97706",NYC:"#7C3AED"};
+const STATUS_DOT = {Upcoming:"du",Confirmed:"dc",Tentative:"dt",Completed:"dcp"};
+
+function ini(n){if(!n||n==="TBD")return"?";return n.split(" ").filter(Boolean).map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+
+function fmtDate(ds,de){
+  if(!ds)return'<span style="color:var(--t3)">TBD</span>';
+  const d=new Date(ds+"T12:00:00"),mo=d.toLocaleDateString("en-US",{month:"short"}),day=d.getDate();
+  if(de&&de!==ds){const d2=new Date(de+"T12:00:00");return mo+" "+day+"–"+d2.getDate();}
+  return mo+" "+day;
+}
+
+function hubH(h){
+  if(!h)return'<span class="hub-n">—</span>';
+  return`<span class="hub-y" style="color:${HUB_COLOR[h]||"#16A34A"}">✓ ${h}</span>`;
+}
+
+function statusH(s){
+  return`<span class="sdot"><span class="dot ${STATUS_DOT[s]||"du"}"></span>${s}</span>`;
+}
+
+/* ── Audience category → CSS class mapping ── */
+const AUD_COLOR = {
+  'SWE':        'aud-swe',
+  'Data':       'aud-data',
+  'TPM':        'aud-tpm',
+  'Product/Design': 'aud-product',
+  'Product':    'aud-product',
+  'Design':     'aud-product',
+  'Security':   'aud-security',
+  'Finance':    'aud-finance',
+  'Sales':      'aud-sales',
+  'MBA':        'aud-finance',
+  'Fintech':    'aud-finance',
+  'SMB':        'aud-finance',
+  'Tech Leaders':'aud-swe',
+  'Safety':     'aud-security',
+  'Hackers':    'aud-security',
+  'Researchers':'aud-data',
+  'AppSec':     'aud-security',
+};
+function audClass(token){
+  const t = token.trim();
+  for(const [key,cls] of Object.entries(AUD_COLOR)){
+    if(t.toLowerCase().includes(key.toLowerCase())) return cls;
+  }
+  return 'aud-default';
+}
+function audH(a){
+  if(!a)return"—";
+  return'<div class="tl">'+a.split(",").map(t=>`<span class="tag ${audClass(t)}">${t.trim()}</span>`).join("")+'</div>';
+}
+
+/* ── Primary audience color for calendar chips ── */
+function primaryAudColor(audience){
+  if(!audience) return null;
+  const tokens = audience.split(',');
+  // Return bg/text for the first recognizable token
+  const MAP = {
+    'aud-swe':     {bg:'#DBEAFE',text:'#1E40AF'},
+    'aud-data':    {bg:'#EDE9FE',text:'#5B21B6'},
+    'aud-tpm':     {bg:'#FCE7F3',text:'#9D174D'},
+    'aud-product': {bg:'#FEF3C7',text:'#92400E'},
+    'aud-security':{bg:'#FEE2E2',text:'#991B1B'},
+    'aud-finance': {bg:'#D1FAE5',text:'#065F46'},
+    'aud-sales':   {bg:'#FFEDD5',text:'#9A3412'},
+    'aud-default': {bg:'#F1F5F9',text:'#475569'},
+  };
+  for(const t of tokens){
+    const cls = audClass(t);
+    if(MAP[cls]) return MAP[cls];
+  }
+  return MAP['aud-default'];
+}
+
+function spkH(s){
+  if(!s)return'<span style="color:var(--t3)">—</span>';
+  return s.split(",").map(x=>`<span class="sc">🎤 ${x.trim()}</span>`).join("");
+}
+
+/* ══ TABLE ROW ══════════════════════════════════════════ */
+function makeRow(e){
+  const ta=e.taStaff?`<span class="npill nps">${e.taStaff}</span>`:'<span style="color:var(--t3)">—</span>';
+  const biz=e.bizAttendees?`<span class="npill npb">${e.bizAttendees>=1000?(e.bizAttendees/1000).toFixed(0)+"K":e.bizAttendees}</span>`:'<span style="color:var(--t3)">—</span>';
+  const regionBadge=e.region?`<span style="font-size:10px;font-weight:600;font-family:'IBM Plex Mono',monospace;padding:2px 6px;border-radius:4px;background:${e.region==="Europe"?"#EDE9FE":"#EBF3FF"};color:${e.region==="Europe"?"#5B21B6":"#1D4ED8"}">${e.region}</span>`:'<span style="color:var(--t3)">—</span>';
+  const cfpLink=e.cfpLink&&e.cfpLink!=="—"?`<a href="${e.cfpLink.startsWith("http")?e.cfpLink:"https://"+e.cfpLink}" target="_blank" style="color:var(--blue);font-size:11px;text-decoration:none;white-space:nowrap">${e.cfpLink.replace(/^https?:\/\//,"")}</a>`:'<span style="color:var(--t3)">—</span>';
+  return`<tr>
+    <td><span class="dc2">${fmtDate(e.dateStart,e.dateEnd)}</span></td>
+    <td>${regionBadge}</td>
+    <td><div class="lc">${e.leader?`<div class="av">${ini(e.leader)}</div><div><div class="ln">${e.leader}</div>${e.title?`<div class="lt">${e.title}</div>`:""}</div>`:'<span style="color:var(--t3)">—</span>'}</div></td>
+    <td style="font-weight:500;min-width:120px;cursor:pointer;color:var(--blue)" onclick="openDetail(${e.id})">${e.event}</td>
+    <td style="white-space:nowrap;color:var(--t2)">${e.location||"TBD"}</td>
+    <td>${hubH(e.hub)}</td>
+    <td style="max-width:220px;font-size:11.5px;color:var(--t2)">${e.oneLine||'<span style="color:var(--t3)">—</span>'}</td>
+    <td>${ta}</td>
+    <td style="font-size:11.5px;white-space:nowrap">${e.taContact?`<span style='display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--blue)'><svg width='11' height='11' viewBox='0 0 14 14' fill='none'><path d='M7 1a3 3 0 100 6A3 3 0 007 1zM2 12c0-2.21 2.24-4 5-4s5 1.79 5 4' stroke='currentColor' stroke-width='1.3' stroke-linecap='round'/></svg>${e.taContact}</span>`:'<span style="color:var(--t3)">—</span>'}</td>
+    <td>${biz}</td>
+    <td style="min-width:130px">${audH(e.audience)}</td>
+    <td style="min-width:100px">${spkH(e.speakers)}</td>
+    <td>${statusH(e.status)}</td>
+    <td style="min-width:100px">${cfpLink}</td>
+    <td style="font-size:11.5px;color:var(--t2);white-space:nowrap;min-width:120px">${e.cfpDeadline||'<span style="color:var(--t3)">—</span>'}</td>
+    <td style="max-width:160px;font-size:11.5px;color:var(--t3)">${e.notes||"—"}</td>
+    <td><div class="acts">
+      <button class="btn-icon" onclick="openEditModal(${e.id})" title="Edit">✏️</button>
+      <button class="btn-icon danger" onclick="delEv(${e.id})" title="Delete">🗑</button>
+    </div></td>
+  </tr>`;
+}
+
+/* ══ CALENDAR ════════════════════════════════════════════ */
+function buildCalendar(){
+  // Fixed range: Aug 2026 → Jul 2027
+  const calMonths=[];
+  for(let i=0;i<12;i++){
+    const d=new Date(2026,7+i,1); // month 7 = August
+    calMonths.push({year:d.getFullYear(),month:d.getMonth()});
+  }
+  const today=new Date();
+  const evts=filtered().filter(e=>e.dateStart);
+  let html="";
+  calMonths.forEach(({year,month},mi)=>{
+    const firstDay=new Date(year,month,1);
+    const lastDate=new Date(year,month+1,0).getDate();
+    const evtsThisMonth=evts.filter(e=>{
+      const ds=new Date(e.dateStart+"T12:00:00");
+      const de=e.dateEnd?new Date(e.dateEnd+"T12:00:00"):ds;
+      return(ds.getFullYear()===year&&ds.getMonth()===month)||(de.getFullYear()===year&&de.getMonth()===month)||(ds<firstDay&&de>=firstDay);
+    });
+
+    // Build the grid
+    let cells='';
+    // DOW headers
+    DOWS.forEach(d=>{cells+=`<div class="dow-cell">${d}</div>`;});
+    // Blank start cells
+    let totalCells=firstDay.getDay();
+    for(let i=0;i<firstDay.getDay();i++) cells+=`<div class="day-cell other-month"><div class="day-num"></div></div>`;
+    // Day cells
+    for(let d=1;d<=lastDate;d++){
+      totalCells++;
+      const isToday=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===d;
+      const cur=new Date(year,month,d);
+      const dayEvts=evts.filter(e=>{
+        const ds=new Date(e.dateStart+"T12:00:00");
+        const de=e.dateEnd?new Date(e.dateEnd+"T12:00:00"):ds;
+        return cur>=new Date(ds.getFullYear(),ds.getMonth(),ds.getDate())&&cur<=new Date(de.getFullYear(),de.getMonth(),de.getDate());
+      });
+      const show=dayEvts.slice(0,3);
+      const more=dayEvts.length-show.length;
+      const dayNumHtml=isToday?`<div class="day-num" style="display:flex"><span style="background:var(--blue);color:#fff;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:9px;">${d}</span></div>`:`<div class="day-num">${d}</div>`;
+      cells+=`<div class="day-cell${isToday?" is-today":""}">
+        ${dayNumHtml}
+        ${show.map(e=>{
+          const ac = primaryAudColor(e.audience);
+          const statusDotColor = {Upcoming:'#3B82F6',Confirmed:'#22C55E',Tentative:'#F59E0B',Completed:'#94A3B8'}[e.status]||'#3B82F6';
+          return `<div class="chip" style="background:${ac.bg};color:${ac.text};border:1px solid ${ac.bg}" onclick="openDetail(${e.id})" title="${e.event} — ${e.leader}"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${statusDotColor};margin-right:3px;vertical-align:middle;flex-shrink:0"></span>${e.event}</div>`;
+        }).join("")}
+        ${more>0?`<div class="chip-more">+${more} more</div>`:""}
+      </div>`;
+    }
+    // Trailing blanks
+    const trailing=(7-(totalCells%7))%7;
+    for(let i=0;i<trailing;i++){totalCells++;cells+=`<div class="day-cell other-month"></div>`;}
+
+    html+=`<div class="month-card">
+      <div class="month-hdr">
+        <span class="month-name">${MONTHS[month].slice(0,3)} ${year}</span>
+        <span class="month-count">${evtsThisMonth.length} event${evtsThisMonth.length!==1?"s":""}</span>
+      </div>
+      <div class="day-grid">${cells}</div>
+    </div>`;
+  });
+  document.getElementById("months-grid").innerHTML=html;
+}
+
+/* ══ MAIN RENDER ════════════════════════════════════════ */
+function render(){
+  // table
+  const rows=sorted(filtered());
+  document.getElementById("tbody").innerHTML=rows.length
+    ?rows.map(makeRow).join("")
+    :'<tr class="er"><td colspan="16">No events match your filters.</td></tr>';
+
+  // stats (always all events)
+  document.getElementById("s-total").textContent=events.length;
+  document.getElementById("s-ta").textContent=events.reduce((s,e)=>s+(+e.taStaff||0),0);
+  document.getElementById("s-leaders").textContent=new Set(events.filter(e=>e.leader&&e.leader!=="TBD").map(e=>e.leader)).size;
+  document.getElementById("s-up").textContent=events.filter(e=>e.status!=="Completed").length;
+  const att=events.reduce((s,e)=>s+(+e.bizAttendees||0),0);
+  document.getElementById("s-att").textContent=att>=1000?(att/1000).toFixed(0)+"K":att;
+  document.getElementById("last-updated").textContent="Updated "+new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+
+  // calendar if visible
+  if(document.getElementById("panel-cal").classList.contains("on")) buildCalendar();
+  // keep signup event dropdown in sync
+  if(typeof populateEventDropdown === 'function') populateEventDropdown();
+}
+
+/* ══ TAB SWITCHING ══════════════════════════════════════ */
+function switchTab(t){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+t).classList.add('on');
+  document.getElementById('tab-'+t).classList.add('on');
+  if(t==='cal') buildCalendar();
+  if(t==='signup'){
+    renderTAMRows();
+    populateTAMDropdown();
+    populateEventDropdown();
+    renderRoster();
+  }
+}
+
+/* ══ MODALS ═════════════════════════════════════════════ */
+function openAddModal(){
+  editId=null;
+  document.getElementById("modal-title").textContent="Add Event";
+  ["f-leader","f-title","f-event","f-ds","f-de","f-loc","f-ta","f-tacontact","f-biz","f-aud","f-spk","f-notes","f-oneline","f-cfplink","f-cfpdeadline"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  document.getElementById("f-region-m").value="";
+  document.getElementById("f-hub-m").value="";
+  document.getElementById("f-status-m").value="Upcoming";
+  document.getElementById("edit-modal").classList.add("open");
+}
+
+function openEditModal(id){
+  const e=events.find(x=>x.id===id);if(!e)return;
+  editId=id;
+  document.getElementById("modal-title").textContent="Edit Event";
+  document.getElementById("f-region-m").value=e.region||"";
+  document.getElementById("f-leader").value=e.leader||"";
+  document.getElementById("f-title").value=e.title||"";
+  // level field removed
+  document.getElementById("f-status-m").value=e.status||"Upcoming";
+  document.getElementById("f-event").value=e.event||"";
+  document.getElementById("f-ds").value=e.dateStart||"";
+  document.getElementById("f-de").value=e.dateEnd||"";
+  document.getElementById("f-loc").value=e.location||"";
+  document.getElementById("f-hub-m").value=e.hub||"";
+  document.getElementById("f-ta").value=e.taStaff||"";
+  document.getElementById("f-biz").value=e.bizAttendees||"";
+  document.getElementById("f-oneline").value=e.oneLine||"";
+  document.getElementById("f-aud").value=e.audience||"";
+  document.getElementById("f-spk").value=e.speakers||"";
+  document.getElementById("f-cfplink").value=e.cfpLink||"";
+  document.getElementById("f-cfpdeadline").value=e.cfpDeadline||"";
+  document.getElementById("f-notes").value=e.notes||"";
+  document.getElementById("f-tacontact").value=e.taContact||"";
+  document.getElementById("edit-modal").classList.add("open");
+}
+
+function saveEvent(){
+  const ev=document.getElementById("f-event").value.trim();
+  if(!ev){alert("Event name is required.");return;}
+  const obj={
+    region:document.getElementById("f-region-m").value,
+    leader:document.getElementById("f-leader").value.trim()||"",
+    title:document.getElementById("f-title").value.trim(),
+    
+    event:ev,
+    dateStart:document.getElementById("f-ds").value,
+    dateEnd:document.getElementById("f-de").value,
+    location:document.getElementById("f-loc").value.trim(),
+    hub:document.getElementById("f-hub-m").value,
+    taStaff:parseInt(document.getElementById("f-ta").value)||0,
+    bizAttendees:parseInt(document.getElementById("f-biz").value)||0,
+    status:document.getElementById("f-status-m").value,
+    oneLine:document.getElementById("f-oneline").value.trim(),
+    audience:document.getElementById("f-aud").value.trim(),
+    speakers:document.getElementById("f-spk").value.trim(),
+    cfpLink:document.getElementById("f-cfplink").value.trim(),
+    cfpDeadline:document.getElementById("f-cfpdeadline").value.trim(),
+    notes:document.getElementById("f-notes").value.trim(),
+    taContact:document.getElementById("f-tacontact").value.trim(),
+  };
+  if(editId){const i=events.findIndex(x=>x.id===editId);events[i]={...events[i],...obj};}
+  else events.push({id:nextId++,...obj});
+  save();render();closeModal("edit-modal");toast(editId?"Event updated — click ⬇ Save & Download to keep it":"Event added — click ⬇ Save & Download to keep it");
+}
+
+function delEv(id){
+  if(!confirm("Remove this event?"))return;
+  events=events.filter(x=>x.id!==id);save();render();toast("Event removed");
+}
+
+function openDetail(id){
+  const e=events.find(x=>x.id===id);if(!e)return;
+  const sc=STATUS_DOT[e.status]||"du";
+  document.getElementById("detail-modal-inner").innerHTML=`
+    <div class="detail-hero">
+      <div class="detail-av">${ini(e.leader)}</div>
+      <div style="flex:1">
+        <div class="detail-title">${e.event}</div>
+        <div class="detail-sub">${e.leader&&e.leader!=="TBD"?e.leader:"Leader TBD"}${e.title?" · "+e.title:""}</div>
+        <div class="detail-pills">
+          <span class="sdot"><span class="dot ${sc}"></span>${e.status}</span>
+          ${e.hub?`<span class="hub-y" style="color:${HUB_COLOR[e.hub]||"#16A34A"}">✓ ${e.hub}</span>`:""}
+        </div>
+      </div>
+      <button class="mcls" onclick="closeModal('detail-modal')">×</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-grid">
+        <div class="detail-field"><label>Date</label><div class="val">${fmtDate(e.dateStart,e.dateEnd)||"TBD"}</div></div>
+        <div class="detail-field"><label>Region</label><div class="val">${e.region||"—"}</div></div>
+        <div class="detail-field"><label>Location</label><div class="val">${e.location||"TBD"}</div></div>
+        <div class="detail-field"><label>TA Staff</label><div class="val">${e.taStaff||"—"}</div></div>
+        <div class="detail-field"><label>Est. Attendees</label><div class="val">${e.bizAttendees?e.bizAttendees.toLocaleString():"—"}</div></div>
+        ${e.taContact?`<div class="detail-field"><label>TA Contact</label><div class="val" style="color:var(--blue)">${e.taContact}</div></div>`:""}
+        ${e.oneLine?`<div class="detail-field" style="grid-column:1/-1"><label>One-Line</label><div class="val" style="color:var(--t2)">${e.oneLine}</div></div>`:""}
+        <div class="detail-field" style="grid-column:1/-1"><label>Audience / Focus</label><div class="val">${audH(e.audience)||"—"}</div></div>
+        <div class="detail-field" style="grid-column:1/-1"><label>Intuit Speakers</label><div class="val">${spkH(e.speakers)||"—"}</div></div>
+        ${e.cfpLink&&e.cfpLink!=="—"?`<div class="detail-field"><label>CFP Link</label><div class="val"><a href="${e.cfpLink.startsWith("http")?e.cfpLink:"https://"+e.cfpLink}" target="_blank" style="color:var(--blue)">${e.cfpLink}</a></div></div>`:""}
+        ${e.cfpDeadline&&e.cfpDeadline!=="—"?`<div class="detail-field"><label>CFP Deadline</label><div class="val">${e.cfpDeadline}</div></div>`:""}
+        ${e.notes?`<div class="detail-field" style="grid-column:1/-1"><label>Notes</label><div class="val" style="color:var(--t2)">${e.notes}</div></div>`:""}
+      </div>
+    </div>
+    <div class="detail-actions">
+      <button class="btn btn-ghost" onclick="closeModal('detail-modal')">Close</button>
+      <button class="btn btn-primary" onclick="closeModal('detail-modal');openEditModal(${e.id})">Edit Event</button>
+    </div>`;
+  document.getElementById("detail-modal").classList.add("open");
+}
+
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+function overlayClick(ev,id){if(ev.target===document.getElementById(id))closeModal(id);}
+
+function resetToDefaults(){
+  if(!confirm("Reset all events to the original default data? Your edits will be lost."))return;
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  events=SEED.map(e=>({...e}));
+  nextId=38;
+  markSaved();
+  render();
+  toast("Reset to original data");
+}
+
+/* ══ SHEETS SYNC ════════════════════════════════════════ */
+function syncFromSheets(){
+  const url=document.getElementById("sheets-url").value.trim();
+  if(!url){alert("Paste your published CSV URL first.");return;}
+  const st=document.getElementById("import-status");
+  st.className="import-status show";st.innerHTML='<div style="color:var(--t2)">⏳ Fetching…</div>';
+  fetch(url)
+    .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.text();})
+    .then(csv=>{
+      const parsed=parseCSV(csv);
+      if(!parsed.length){st.innerHTML='<div class="import-err">No valid rows found. Check column headers.</div>';return;}
+      events=parsed;nextId=Math.max(...events.map(e=>e.id||0))+1;
+      save();render();
+      st.innerHTML=`<div class="import-ok">✓ Synced ${events.length} events from Google Sheets</div>`;
+      toast("Synced "+events.length+" events from Sheets");
+    })
+    .catch(err=>{st.innerHTML=`<div class="import-err">Error: ${err.message} — make sure the sheet is published as CSV and CORS is enabled.</div>`;});
+}
+
+function parseCSV(text){
+  const lines=text.replace(/\r\n/g,"\n").replace(/\r/g,"\n").trim().split("\n");
+  if(lines.length<2)return[];
+  const headers=splitRow(lines[0]).map(h=>h.trim().toLowerCase().replace(/['"]/g,""));
+  const MAP={leader:"leader",title:"title",level:"level",event:"event","start date":"dateStart","end date":"dateEnd",location:"location","local hub":"hub","ta staff":"taStaff","biz attendees":"bizAttendees","audience/focus":"audience","intuit speakers":"speakers",status:"status",notes:"notes"};
+  let id=1;
+  return lines.slice(1).filter(l=>l.trim()).map(line=>{
+    const vals=splitRow(line);
+    const obj={id:id++,leader:"TBD",title:"",level:"",event:"",dateStart:"",dateEnd:"",location:"",hub:"",taStaff:0,bizAttendees:0,status:"Upcoming",audience:"",speakers:"",notes:""};
+    headers.forEach((h,i)=>{const key=MAP[h];if(key&&vals[i]!=null){const v=(vals[i]||"").trim();obj[key]=(key==="taStaff"||key==="bizAttendees")?parseInt(v)||0:v;}});
+    return obj.event?obj:null;
+  }).filter(Boolean);
+}
+
+function splitRow(row){
+  const r=[];let cur="",inQ=false;
+  for(let i=0;i<row.length;i++){const c=row[i];if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){r.push(cur);cur="";}else cur+=c;}
+  r.push(cur);return r;
+}
+
+/* ══ CSV EXPORT ══════════════════════════════════════════ */
+function exportCSV(){
+  const h=["Leader","Title","Level","Event","Start Date","End Date","Location","Local Hub","TA Staff","Biz Attendees","Audience/Focus","Intuit Speakers","Status","Notes"];
+  const rows=events.map(e=>[e.leader,e.title,e.level,e.event,e.dateStart,e.dateEnd,e.location,e.hub,e.taStaff,e.bizAttendees,e.audience,e.speakers,e.status,e.notes].map(v=>'"'+(v||"").toString().replace(/"/g,'""')+'"').join(","));
+  const csv=[h.join(","),...rows].join("\n");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download="intuit-leadership-events.csv";a.click();
+  toast("CSV exported");
+}
+
+/* ══ TOAST ═══════════════════════════════════════════════ */
+let _toastTimer;
+function toast(msg){
+  document.getElementById("toast-msg").textContent=msg;
+  const el=document.getElementById("toast");
+  el.classList.add("show");
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>el.classList.remove("show"),2800);
+}
+
+/* ══ INIT ════════════════════════════════════════════════ */
+
+/* ══ RECRUITER SIGNUP ════════════════════════════════════ */
+const TAM_KEY  = 'intuit-tams-v1';
+const ROSTER_KEY = 'intuit-roster-v1';
+
+function loadTAMs(){
+  try{ const r=localStorage.getItem(TAM_KEY); if(r) return JSON.parse(r); }catch(e){}
+  return [{name:'',email:''}];
+}
+function saveTAMs(){
+  const rows = document.querySelectorAll('.tam-row');
+  const tams = [];
+  rows.forEach(r=>{
+    const n=r.querySelector('.tam-name').value.trim();
+    const e=r.querySelector('.tam-email').value.trim();
+    if(n||e) tams.push({name:n,email:e});
+  });
+  try{ localStorage.setItem(TAM_KEY, JSON.stringify(tams)); }catch(e){}
+  tamData = tams;
+  populateTAMDropdown();
+  document.getElementById('tam-saved-msg').style.display='inline';
+  setTimeout(()=>document.getElementById('tam-saved-msg').style.display='none',2500);
+}
+let tamData = loadTAMs();
+
+function renderTAMRows(){
+  const container = document.getElementById('tam-rows');
+  if(!container) return;
+  container.innerHTML = tamData.map((t,i)=>`
+    <div class="tam-row ff" style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;">
+      <div class="ff"><label>TAM Name</label><input type="text" class="mi tam-name" placeholder="e.g. Alex Rivera" value="${t.name||''}"></div>
+      <div class="ff"><label>TAM Email</label><input type="email" class="mi tam-email" placeholder="e.g. arivera@intuit.com" value="${t.email||''}"></div>
+      <button class="btn btn-ghost btn-sm" style="margin-bottom:1px" onclick="removeTAMRow(${i})">✕</button>
+    </div>`).join('');
+}
+function addTAMRow(){
+  tamData.push({name:'',email:''});
+  renderTAMRows();
+}
+function removeTAMRow(i){
+  tamData.splice(i,1);
+  if(!tamData.length) tamData=[{name:'',email:''}];
+  renderTAMRows();
+}
+function populateTAMDropdown(){
+  const sel = document.getElementById('su-tam');
+  if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select your TAM —</option>' +
+    tamData.filter(t=>t.name).map(t=>`<option value="${t.email}">${t.name}</option>`).join('');
+  sel.value = cur;
+}
+function populateEventDropdown(){
+  const sel = document.getElementById('su-event');
+  const fsel = document.getElementById('roster-filter-event');
+  if(!sel) return;
+  const cur = sel.value;
+  const opts = events.filter(e=>e.event).map(e=>`<option value="${e.id}">${e.event}${e.dateStart?' ('+fmtDatePlain(e.dateStart)+')':' (TBD)'}</option>`).join('');
+  sel.innerHTML = '<option value="">— Select event —</option>' + opts;
+  sel.value = cur;
+  if(fsel){
+    const fcur = fsel.value;
+    fsel.innerHTML = '<option value="">All Events</option>' + opts;
+    fsel.value = fcur;
+  }
+}
+function fmtDatePlain(ds){
+  if(!ds) return 'TBD';
+  const d = new Date(ds+'T12:00:00');
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+let rosterData = [];
+function loadRoster(){
+  try{ const r=localStorage.getItem(ROSTER_KEY); if(r) rosterData=JSON.parse(r); }catch(e){}
+}
+function saveRoster(){
+  try{ localStorage.setItem(ROSTER_KEY, JSON.stringify(rosterData)); }catch(e){}
+}
+
+async function pushSignupToSheet(row){
+  try{
+    await fetch(WEBHOOK, {
+      method:'POST',
+      body: JSON.stringify({type:'signup', row}),
+      headers:{'Content-Type':'application/json'}
+    });
+  } catch(e){ console.warn('Signup sheet push failed:', e); }
+}
+
+function submitSignup(){
+  const name  = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim();
+  const tamEmail = document.getElementById('su-tam').value;
+  const tamName  = document.getElementById('su-tam').selectedOptions[0]?.text||'';
+  const evtId  = document.getElementById('su-event').value;
+  const evtName = document.getElementById('su-event').selectedOptions[0]?.text||'';
+  const role   = document.getElementById('su-role').value;
+  const travel = document.getElementById('su-travel').value;
+  const notes  = document.getElementById('su-notes').value.trim();
+
+  if(!name)  { alert('Please enter your name.');  return; }
+  if(!email) { alert('Please enter your email.'); return; }
+  if(!tamEmail){ alert('Please select your TAM.'); return; }
+  if(!evtId) { alert('Please select an event.');  return; }
+
+  // Find event details for email body
+  const evt = events.find(e=>String(e.id)===String(evtId))||{};
+  const dateStr = evt.dateStart ? fmtDatePlain(evt.dateStart)+(evt.dateEnd&&evt.dateEnd!==evt.dateStart?' – '+fmtDatePlain(evt.dateEnd):'') : 'TBD';
+
+  // Save to roster
+  rosterData.push({
+    name, email, tamEmail, tamName,
+    eventId:evtId, eventName:evtName,
+    role, travel, notes,
+    approval: 'Pending',
+    submitted: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})
+  });
+  saveRoster();
+  pushSignupToSheet(rosterData[rosterData.length-1]);
+  renderRoster();
+
+  // Build mailto to TAM
+  const subject = encodeURIComponent(`[Recruiter Sign-Up] ${name} → ${evtName}`);
+  const body = encodeURIComponent(
+`Hi ${tamName.split(' ')[0]},
+
+${name} (${email}) has signed up to staff the following event:
+
+Event:    ${evtName}
+Date:     ${dateStr}
+Location: ${evt.location||'TBD'}
+Role:     ${role}
+Travel:   ${travel}
+Notes:    ${notes||'—'}
+
+Please review and confirm their assignment.
+
+This notification was sent automatically from the FY27 Intuit Event Calendar.`
+  );
+  window.location.href = `mailto:${tamEmail}?subject=${subject}&body=${body}`;
+
+  // Clear form
+  ['su-name','su-email','su-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('su-tam').value='';
+  document.getElementById('su-event').value='';
+  toast('✓ Signed up! Email to TAM opened.');
+}
+
+function renderRoster(){
+  const tbody = document.getElementById('roster-tbody');
+  if(!tbody) return;
+  const filterEvt = document.getElementById('roster-filter-event')?.value||'';
+  const rows = rosterData.filter(r=>!filterEvt||String(r.eventId)===String(filterEvt));
+  if(!rows.length){
+    tbody.innerHTML='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--t3);font-size:13px;">No sign-ups yet. Be the first!</td></tr>';
+    return;
+  }
+  const approvalBadge = (a) => {
+    if(a==='Approved')   return '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#DCFCE7;color:#15803D;white-space:nowrap">✓ Approved</span>';
+    if(a==='Rejected')   return '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#FEE2E2;color:#991B1B;white-space:nowrap">✕ Rejected</span>';
+    return '<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:#FEF3C7;color:#92400E;white-space:nowrap">⏳ Pending</span>';
+  };
+  tbody.innerHTML = rows.map((r,i)=>{
+    const ri = rosterData.indexOf(r);
+    return `<tr style="border-bottom:1px solid var(--border2)">
+    <td style="padding:10px 12px;font-weight:500">${r.name}</td>
+    <td style="padding:10px 12px;font-size:11.5px;color:var(--t2)">${r.email}</td>
+    <td style="padding:10px 12px;font-size:12px;color:var(--blue);font-weight:500">${r.eventName}</td>
+    <td style="padding:10px 12px"><span class="tag">${r.role}</span></td>
+    <td style="padding:10px 12px;font-size:11.5px;color:var(--t2)">${r.tamName}</td>
+    <td style="padding:10px 12px;font-size:11.5px">${r.travel}</td>
+    <td style="padding:10px 12px;font-size:11.5px;color:var(--t3);max-width:160px">${r.notes||'—'}</td>
+    <td style="padding:10px 12px;font-size:10.5px;color:var(--t3);white-space:nowrap">${r.submitted}</td>
+    <td style="padding:10px 12px;white-space:nowrap">
+      ${approvalBadge(r.approval)}
+      ${r.approval==='Pending'?`<div style="display:flex;gap:4px;margin-top:4px">
+        <button class="btn btn-sm" style="background:#DCFCE7;color:#15803D;border:1px solid #BBF7D0;font-size:10px;padding:2px 8px" onclick="setApproval(${ri},'Approved')">✓ Approve</button>
+        <button class="btn btn-sm" style="background:#FEE2E2;color:#991B1B;border:1px solid #FECACA;font-size:10px;padding:2px 8px" onclick="setApproval(${ri},'Rejected')">✕ Reject</button>
+      </div>`:''}
+    </td>
+    <td style="padding:10px 12px"><button class="btn-icon danger" onclick="removeSignup(${ri})" title="Remove">✕</button></td>
+  </tr>`;}).join('');
+}
+function removeSignup(i){
+  if(!confirm('Remove this sign-up?')) return;
+  rosterData.splice(i,1);
+  saveRoster();
+  renderRoster();
+}
+function setApproval(i, status){
+  rosterData[i].approval = status;
+  saveRoster();
+  renderRoster();
+  // Send approval email to recruiter
+  const r = rosterData[i];
+  const subject = encodeURIComponent(`[Event Sign-Up ${status}] ${r.eventName}`);
+  const body = encodeURIComponent(`Hi ${r.name},\n\nYour sign-up for ${r.eventName} has been ${status.toLowerCase()} by your TAM, ${r.tamName}.\n\n${status==='Approved'?'We look forward to having you at the event! Further details will follow.':'If you have questions, please reach out to your TAM directly.'}\n\nFY27 Intuit Event Calendar`);
+  window.location.href = `mailto:${r.email}?subject=${subject}&body=${body}`;
+  toast(`Sign-up ${status.toLowerCase()} — email to recruiter opened`);
+}
+
+function exportRosterCSV(){
+  const h = ['Name','Email','Event','Role','TAM','TAM Email','Travel','Notes','Submitted','Approval'];
+  const rows = rosterData.map(r=>[r.name,r.email,r.eventName,r.role,r.tamName,r.tamEmail,r.travel,r.notes,r.submitted,r.approval||'Pending'].map(v=>'"'+(v||'').replace(/"/g,'""')+'"').join(','));
+  const csv = [h.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'recruiter-signups.csv';
+  a.click();
+}
+
+loadRoster();
+
+/* ══ INIT — load from Google Sheet then render ══════════ */
+(async () => {
+  events = await loadEvents();
+  nextId = Math.max(27,...events.map(e=>e.id||0))+1;
+  render();
+})();
+</script>
+
+
+
+<!-- ══ RECRUITER SIGNUP PANEL ═══════════════════════════ -->
+<div class="panel" id="panel-signup">
+  <div style="padding:22px 28px 36px;max-width:900px;">
+
+    <!-- TAM Config card -->
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);margin-bottom:20px;">
+      <div style="background:linear-gradient(110deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--r2) var(--r2) 0 0;padding:18px 24px;display:flex;align-items:center;gap:14px;">
+        <div style="width:40px;height:40px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a4 4 0 100 8 4 4 0 000-8zM3 17c0-3.31 3.13-6 7-6s7 2.69 7 6" stroke="white" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        </div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">TAM Configuration</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6);">Set up TAM contacts so recruiters who sign up trigger an automatic email notification.</div>
+        </div>
+      </div>
+      <div style="padding:20px 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;" id="tam-rows">
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm" onclick="addTAMRow()">+ Add TAM</button>
+          <button class="btn btn-primary btn-sm" onclick="saveTAMs()">Save TAMs</button>
+          <span id="tam-saved-msg" style="font-size:11.5px;color:#15803D;display:none;">✓ Saved</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--t3);margin-top:10px;line-height:1.6;">
+          <strong>How notifications work:</strong> When a recruiter submits the sign-up form, their browser opens a pre-filled email to their TAM with all event details. The recruiter selects their TAM from the dropdown when signing up.
+        </p>
+      </div>
+    </div>
+
+    <!-- Signup form card -->
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);margin-bottom:20px;">
+      <div style="padding:18px 24px 14px;border-bottom:1px solid var(--border2);">
+        <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px;">Recruiter Event Sign-Up</div>
+        <div style="font-size:12px;color:var(--t3);">Sign up to staff an event. Your TAM will be notified automatically.</div>
+      </div>
+      <div style="padding:20px 24px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="ff"><label>Your Name *</label><input type="text" class="mi" id="su-name" placeholder="e.g. Jordan Smith"></div>
+          <div class="ff"><label>Your Email *</label><input type="email" class="mi" id="su-email" placeholder="e.g. jordan@intuit.com"></div>
+          <div class="ff"><label>Your TAM *</label>
+            <select class="ms" id="su-tam">
+              <option value="">— Select your TAM —</option>
+            </select>
+          </div>
+          <div class="ff"><label>Event *</label>
+            <select class="ms" id="su-event"><option value="">— Select event —</option><option value="12">RenderATL (Aug 12, 2026)</option><option value="13">Grace Hopper (Oct 27, 2026)</option><option value="14">AfroTech (Nov 2, 2026)</option><option value="15">BFUTR (Nov 19, 2026)</option><option value="16">NBMBAA Conference (Sep 23, 2026)</option><option value="17">Women in Product (Oct 1, 2026)</option><option value="18">Tech Futures (Oct 5, 2026)</option><option value="19">Thrive Conference (Oct 11, 2026)</option><option value="20">Latinas in Tech @ SHPE (Oct 28, 2026)</option><option value="21">ALPFA Conference (TBD)</option><option value="22">Fleurix Conference (TBD)</option><option value="27">Real World AI Security (RWAISec) (Jun 23, 2026)</option><option value="28">Berkeley Agentic AI Summit (Aug 1, 2026)</option><option value="30">ACM AISec (workshop @ CCS) (Nov 15, 2026)</option><option value="31">AI-security workshop @ ESORICS (Sep 17, 2026)</option><option value="32">CAMLIS (TBD)</option><option value="33">DEF CON 34 — AI Village (Aug 6, 2026)</option><option value="34">DEF CON 34 — AppSec Village (Aug 6, 2026)</option><option value="35">DEF CON 34 (parent) (Aug 6, 2026)</option><option value="36">DEF CON 35 (Aug 5, 2027)</option><option value="37">Black Hat USA (Aug 1, 2026)</option></select>
+          </div>
+          <div class="ff"><label>Your Role at Event</label>
+            <select class="ms" id="su-role">
+              <option value="Recruiter">Recruiter</option>
+              <option value="Lead Recruiter">Lead Recruiter</option>
+              <option value="Coordinator">Coordinator</option>
+              <option value="Sourcer">Sourcer</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="ff"><label>Travel Required?</label>
+            <select class="ms" id="su-travel">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+              <option value="TBD">TBD</option>
+            </select>
+          </div>
+          <div class="ff full"><label>Notes / Availability</label>
+            <input type="text" class="mi" id="su-notes" placeholder="e.g. Available all 3 days, prefer day 1 setup shift">
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;align-items:center;">
+          <button class="btn btn-primary" onclick="submitSignup()">Submit &amp; Notify TAM</button>
+          <span style="font-size:11.5px;color:var(--t3);">Clicking submit opens a pre-filled email to your TAM.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signup roster -->
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);">
+      <div style="padding:16px 24px 12px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:14px;font-weight:700;color:var(--t1);">Sign-Up Roster</div>
+        <div style="display:flex;gap:8px;">
+          <select class="fsel" id="roster-filter-event" onchange="renderRoster()" style="font-size:11.5px;padding:5px 24px 5px 8px;"><option value="">All Events</option><option value="12">RenderATL (Aug 12, 2026)</option><option value="13">Grace Hopper (Oct 27, 2026)</option><option value="14">AfroTech (Nov 2, 2026)</option><option value="15">BFUTR (Nov 19, 2026)</option><option value="16">NBMBAA Conference (Sep 23, 2026)</option><option value="17">Women in Product (Oct 1, 2026)</option><option value="18">Tech Futures (Oct 5, 2026)</option><option value="19">Thrive Conference (Oct 11, 2026)</option><option value="20">Latinas in Tech @ SHPE (Oct 28, 2026)</option><option value="21">ALPFA Conference (TBD)</option><option value="22">Fleurix Conference (TBD)</option><option value="27">Real World AI Security (RWAISec) (Jun 23, 2026)</option><option value="28">Berkeley Agentic AI Summit (Aug 1, 2026)</option><option value="30">ACM AISec (workshop @ CCS) (Nov 15, 2026)</option><option value="31">AI-security workshop @ ESORICS (Sep 17, 2026)</option><option value="32">CAMLIS (TBD)</option><option value="33">DEF CON 34 — AI Village (Aug 6, 2026)</option><option value="34">DEF CON 34 — AppSec Village (Aug 6, 2026)</option><option value="35">DEF CON 34 (parent) (Aug 6, 2026)</option><option value="36">DEF CON 35 (Aug 5, 2027)</option><option value="37">Black Hat USA (Aug 1, 2026)</option></select>
+          <button class="btn btn-ghost btn-sm" onclick="exportRosterCSV()">Export Roster CSV</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="border-radius:0;box-shadow:none;">
+          <thead><tr style="background:var(--navy);">
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Name</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Email</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Event</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Role</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">TAM</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Travel</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Notes</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">Submitted</th>
+            <th style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:10px 12px;text-align:left;white-space:nowrap;">TAM Approval</th>
+            <th></th>
+          </tr></thead>
+          <tbody id="roster-tbody">
+            <tr><td colspan="10" style="text-align:center;padding:40px;color:var(--t3);font-size:13px;">No sign-ups yet. Be the first!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>
