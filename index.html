@@ -88,7 +88,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .btn-primary:hover{background:#1560C8;box-shadow:0 2px 8px rgba(30,111,229,.3);}
 .btn-ghost{background:transparent;color:var(--t2);border:1.5px solid var(--border);}
 .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
-.btn-sm{paddingca:5px 11px;font-size:11.5px;}
+.btn-sm{padding:5px 11px;font-size:11.5px;}
 .btn-icon{width:30px;height:30px;padding:0;justify-content:center;background:transparent;color:var(--t3);border:1.5px solid transparent;border-radius:var(--r);}
 .btn-icon:hover{background:var(--bg);color:var(--blue);border-color:var(--border);}
 .btn-icon.danger:hover{color:#EF4444;border-color:#FECACA;background:#FEF2F2;}
@@ -893,27 +893,27 @@ textarea.mi{resize:vertical;min-height:60px;}
 <script>
 /* ══ DATA ═══════════════════════════════════════════════ */
 const SEED = [
-  {"id":12,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"RenderATL","dateStart":"2026-08-12","dateEnd":"2026-08-13","location":"Atlanta, GA","hub":"ATL","taStaff":8,"bizAttendees":5000,"status":"Upcoming","audience":"SWE, Product/Design, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":13,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Grace Hopper","dateStart":"2026-10-27","dateEnd":"2026-10-30","location":"Anaheim, CA","hub":"","taStaff":10,"bizAttendees":30000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":14,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"AfroTech","dateStart":"2026-11-02","dateEnd":"2026-11-06","location":"Houston, TX","hub":"","taStaff":10,"bizAttendees":10000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":15,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"BFUTR","dateStart":"2026-11-19","dateEnd":"2026-11-20","location":"Toronto, ON","hub":"","taStaff":8,"bizAttendees":2500,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":16,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"NBMBAA Conference","dateStart":"2026-09-23","dateEnd":"2026-09-25","location":"Los Angeles, CA","hub":"","taStaff":4,"bizAttendees":3000,"status":"Upcoming","audience":"MBA, Finance, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":17,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Women in Product","dateStart":"2026-10-01","dateEnd":"2026-10-01","location":"Santa Clara, CA","hub":"Bay Area","taStaff":4,"bizAttendees":1200,"status":"Upcoming","audience":"TPM, Product/Design","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":18,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Tech Futures","dateStart":"2026-10-05","dateEnd":"2026-10-08","location":"New York, NY","hub":"NYC","taStaff":4,"bizAttendees":4000,"status":"Upcoming","audience":"SWE, Tech Leaders","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"LGBTQ+ pipeline"},
-  {"id":19,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Thrive Conference","dateStart":"2026-10-11","dateEnd":"2026-10-13","location":"Dallas, TX","hub":"Dallas","taStaff":4,"bizAttendees":2000,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":20,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Latinas in Tech @ SHPE","dateStart":"2026-10-28","dateEnd":"2026-10-30","location":"Indianapolis, IN","hub":"","taStaff":4,"bizAttendees":1500,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
-  {"id":21,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"ALPFA Conference","dateStart":"","dateEnd":"","location":"Bay Area, CA","hub":"Bay Area","taStaff":4,"bizAttendees":2000,"status":"Tentative","audience":"","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"Fintech, SWE, TPM, Product/Design","notes":"Date TBD – Oct timeframe Fintech Analysts, TPM, Tech"},
-  {"id":22,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Fleurix Conference","dateStart":"","dateEnd":"","location":"TBD","hub":"","taStaff":4,"bizAttendees":0,"status":"Tentative","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"Date and location TBD"},
-  {"id":27,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Real World AI Security (RWAISec)","dateStart":"2026-06-23","dateEnd":"2026-06-25","location":"Stanford, CA","hub":"Bay Area","taStaff":0,"bizAttendees":0,"status":"Completed","audience":"Security","speakers":"Itsik Mantin, Abhi Srivastava","cfpLink":"invite/curated","cfpDeadline":"—","oneLine":"Curates year's most impactful real-world AI-security attacks/defenses from BH/DEFCON/RSAC + top academic venues","notes":"Sponsorship + Itsik Mantin attending and Abhi Srivastava | Just concluded Data Security Researchers"},
-  {"id":28,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Berkeley Agentic AI Summit","dateStart":"2026-08-01","dateEnd":"2026-08-02","location":"UC Berkeley, CA","hub":"Bay Area","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"Itsik Mantin","cfpLink":"rdi.berkeley.edu","cfpDeadline":"Closed (~Apr 15, 2026)","oneLine":"Agentic AI full-stack; dedicated safety/security track","notes":"Itsik Mantin presenting Data, Safety, Security Researchers"},
-  {"id":30,"region":"Europe","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"ACM AISec (workshop @ CCS)","dateStart":"2026-11-15","dateEnd":"2026-11-19","location":"The Hague, NL","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aisec.cc","cfpDeadline":"Jul 24, 2026 (firm)","oneLine":"Canonical academic AI/ML-security workshop, 19th ed.","notes":"Data Security Researchers"},
-  {"id":31,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"AI-security workshop @ ESORICS","dateStart":"2026-09-17","dateEnd":"2026-09-18","location":"Rome, IT","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sec-deadlines.github.io","cfpDeadline":"~Jun 17, 2026 (passed)","oneLine":"European AI-security workshop co-located w/ ESORICS","notes":"Data Security Researchers"},
-  {"id":32,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"CAMLIS","dateStart":"","dateEnd":"","location":"Arlington, VA","hub":"","taStaff":0,"bizAttendees":0,"status":"Tentative","audience":"Data Security","speakers":"","cfpLink":"camlis.org","cfpDeadline":"TBA","oneLine":"Applied ML in infosec; practitioner-heavy","notes":"TBA 2026 (hist. Oct) Data in InfoSec Practitioners"},
-  {"id":33,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AI Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aivillage.org","cfpDeadline":"check village site","oneLine":"No-BS practical AI security: prompt injection, AI red-team workshops, GRT","notes":"AI Security, Hackers, Researchers"},
-  {"id":34,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AppSec Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sessionize.com/appsec-village-def-con-34","cfpDeadline":"Apr 1–May 31, 2026 (passed)","oneLine":"Attacker-minded AppSec (incl. AI security, supply chain); Fix-the-Flag CTF","notes":"AppSec, AI Security, Supply Chain"},
-  {"id":35,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 (parent)","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"defcon.org (open calls)","cfpDeadline":"varies by track","oneLine":"World's largest hacker con; theme \"Agency\"","notes":"Security Researchers, Hackers"},
-  {"id":36,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 35","dateStart":"2027-08-05","dateEnd":"2027-08-08","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"TBA","cfpDeadline":"TBA","oneLine":"Next edition","notes":"Save-the-date  Security Researchers, Hackers"},
-  {"id":37,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Black Hat USA","dateStart":"2026-08-01","dateEnd":"2026-08-06","location":"Las Vegas, NV","hub":"","taStaff":0,"bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"blackhat.com/call-for-papers","cfpDeadline":"Passed (~Dec 11, 2025)","oneLine":"Premier industry research disclosures; strong AI-security + AI Summit","notes":"Briefings Aug 5–6 Security Researchers, Industry Practitioners"}
+  {"id":12,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"RenderATL","dateStart":"2026-08-12","dateEnd":"2026-08-13","location":"Atlanta, GA","hub":"ATL","taStaff":8,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":5000,"status":"Upcoming","audience":"SWE, Product/Design, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":13,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Grace Hopper","dateStart":"2026-10-27","dateEnd":"2026-10-30","location":"Anaheim, CA","hub":"","taStaff":10,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":30000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":14,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"AfroTech","dateStart":"2026-11-02","dateEnd":"2026-11-06","location":"Houston, TX","hub":"","taStaff":10,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":10000,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":15,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"BFUTR","dateStart":"2026-11-19","dateEnd":"2026-11-20","location":"Toronto, ON","hub":"","taStaff":8,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":2500,"status":"Upcoming","audience":"SWE, Data, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":16,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"NBMBAA Conference","dateStart":"2026-09-23","dateEnd":"2026-09-25","location":"Los Angeles, CA","hub":"","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":3000,"status":"Upcoming","audience":"MBA, Finance, Sales","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":17,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Women in Product","dateStart":"2026-10-01","dateEnd":"2026-10-01","location":"Santa Clara, CA","hub":"Bay Area","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":1200,"status":"Upcoming","audience":"TPM, Product/Design","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":18,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Tech Futures","dateStart":"2026-10-05","dateEnd":"2026-10-08","location":"New York, NY","hub":"NYC","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":4000,"status":"Upcoming","audience":"SWE, Tech Leaders","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"LGBTQ+ pipeline"},
+  {"id":19,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Thrive Conference","dateStart":"2026-10-11","dateEnd":"2026-10-13","location":"Dallas, TX","hub":"Dallas","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":2000,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":20,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Latinas in Tech @ SHPE","dateStart":"2026-10-28","dateEnd":"2026-10-30","location":"Indianapolis, IN","hub":"","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":1500,"status":"Upcoming","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":""},
+  {"id":21,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"ALPFA Conference","dateStart":"","dateEnd":"","location":"Bay Area, CA","hub":"Bay Area","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":2000,"status":"Tentative","audience":"","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"Fintech, SWE, TPM, Product/Design","notes":"Date TBD – Oct timeframe Fintech Analysts, TPM, Tech"},
+  {"id":22,"region":"US","leader":"James Loduca","title":"VP of D & I","level":"L4","event":"Fleurix Conference","dateStart":"","dateEnd":"","location":"TBD","hub":"","taStaff":4,"taContact":"Willie Henry / Melissa Bontempi","bizAttendees":0,"status":"Tentative","audience":"SWE, Product/Design, TPM","speakers":"","cfpLink":"","cfpDeadline":"","oneLine":"","notes":"Date and location TBD"},
+  {"id":27,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Real World AI Security (RWAISec)","dateStart":"2026-06-23","dateEnd":"2026-06-25","location":"Stanford, CA","hub":"Bay Area","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Completed","audience":"Security","speakers":"Itsik Mantin, Abhi Srivastava","cfpLink":"invite/curated","cfpDeadline":"—","oneLine":"Curates year's most impactful real-world AI-security attacks/defenses from BH/DEFCON/RSAC + top academic venues","notes":"Sponsorship + Itsik Mantin attending and Abhi Srivastava | Just concluded Data Security Researchers"},
+  {"id":28,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Berkeley Agentic AI Summit","dateStart":"2026-08-01","dateEnd":"2026-08-02","location":"UC Berkeley, CA","hub":"Bay Area","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"Itsik Mantin","cfpLink":"rdi.berkeley.edu","cfpDeadline":"Closed (~Apr 15, 2026)","oneLine":"Agentic AI full-stack; dedicated safety/security track","notes":"Itsik Mantin presenting Data, Safety, Security Researchers"},
+  {"id":30,"region":"Europe","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"ACM AISec (workshop @ CCS)","dateStart":"2026-11-15","dateEnd":"2026-11-19","location":"The Hague, NL","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aisec.cc","cfpDeadline":"Jul 24, 2026 (firm)","oneLine":"Canonical academic AI/ML-security workshop, 19th ed.","notes":"Data Security Researchers"},
+  {"id":31,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"AI-security workshop @ ESORICS","dateStart":"2026-09-17","dateEnd":"2026-09-18","location":"Rome, IT","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sec-deadlines.github.io","cfpDeadline":"~Jun 17, 2026 (passed)","oneLine":"European AI-security workshop co-located w/ ESORICS","notes":"Data Security Researchers"},
+  {"id":32,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"CAMLIS","dateStart":"","dateEnd":"","location":"Arlington, VA","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Tentative","audience":"Data Security","speakers":"","cfpLink":"camlis.org","cfpDeadline":"TBA","oneLine":"Applied ML in infosec; practitioner-heavy","notes":"TBA 2026 (hist. Oct) Data in InfoSec Practitioners"},
+  {"id":33,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AI Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"aivillage.org","cfpDeadline":"check village site","oneLine":"No-BS practical AI security: prompt injection, AI red-team workshops, GRT","notes":"AI Security, Hackers, Researchers"},
+  {"id":34,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 — AppSec Village","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"sessionize.com/appsec-village-def-con-34","cfpDeadline":"Apr 1–May 31, 2026 (passed)","oneLine":"Attacker-minded AppSec (incl. AI security, supply chain); Fix-the-Flag CTF","notes":"AppSec, AI Security, Supply Chain"},
+  {"id":35,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 34 (parent)","dateStart":"2026-08-06","dateEnd":"2026-08-09","location":"Las Vegas, NV","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"defcon.org (open calls)","cfpDeadline":"varies by track","oneLine":"World's largest hacker con; theme \"Agency\"","notes":"Security Researchers, Hackers"},
+  {"id":36,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"DEF CON 35","dateStart":"2027-08-05","dateEnd":"2027-08-08","location":"Las Vegas, NV","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"TBA","cfpDeadline":"TBA","oneLine":"Next edition","notes":"Save-the-date  Security Researchers, Hackers"},
+  {"id":37,"region":"US","leader":"Itsik Mantin","title":"DE CTREC","level":"L5","event":"Black Hat USA","dateStart":"2026-08-01","dateEnd":"2026-08-06","location":"Las Vegas, NV","hub":"","taStaff":0,"taContact":"Melissa Bontempi","bizAttendees":0,"status":"Upcoming","audience":"Security","speakers":"","cfpLink":"blackhat.com/call-for-papers","cfpDeadline":"Passed (~Dec 11, 2025)","oneLine":"Premier industry research disclosures; strong AI-security + AI Summit","notes":"Briefings Aug 5–6 Security Researchers, Industry Practitioners"}
 ];
 
 const SHEET_ID = "intuit-tracker-v8";
@@ -1248,6 +1248,7 @@ function render(){
   if(document.getElementById("panel-cal").classList.contains("on")) buildCalendar();
   // keep signup event dropdown in sync
   if(typeof populateEventDropdown === 'function') populateEventDropdown();
+  if(typeof renderStaffingSummary === 'function') renderStaffingSummary();
 }
 
 /* ══ TAB SWITCHING ══════════════════════════════════════ */
@@ -1598,7 +1599,64 @@ This notification was sent automatically from the FY27 Intuit Event Calendar.`
   toast('✓ Signed up! Email to TAM opened.');
 }
 
+function renderStaffingSummary(){
+  const wrap = document.getElementById('staffing-summary');
+  const totalsWrap = document.getElementById('staffing-totals');
+  if(!wrap) return;
+
+  const needEvents = events.filter(e=>e.event && (+e.taStaff||0)>0 && e.status!=='Completed');
+
+  const rows = needEvents.map(e=>{
+    const signedUp = rosterData.filter(r=>String(r.eventId)===String(e.id) && r.approval!=='Rejected');
+    const signedCount = signedUp.length;
+    const needed = +e.taStaff||0;
+    const left = Math.max(needed-signedCount,0);
+    return {e, needed, signedCount, left, signedUp};
+  }).sort((a,b)=> b.left-a.left || (a.e.dateStart||'9999').localeCompare(b.e.dateStart||'9999'));
+
+  const totalNeeded = rows.reduce((s,r)=>s+r.needed,0);
+  const totalSigned = rows.reduce((s,r)=>s+Math.min(r.signedCount,r.needed),0);
+  const totalLeft   = rows.reduce((s,r)=>s+r.left,0);
+
+  if(totalsWrap){
+    totalsWrap.innerHTML = `
+      <div style="text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--t1)">${totalNeeded}</div><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em">Total Spots</div></div>
+      <div style="text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:var(--green)">${totalSigned}</div><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em">Filled</div></div>
+      <div style="text-align:center"><div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;color:${totalLeft>0?'#DC2626':'var(--green)'}">${totalLeft}</div><div style="font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em">Still Needed</div></div>
+    `;
+  }
+
+  if(!rows.length){
+    wrap.innerHTML = '<div style="text-align:center;padding:20px;color:var(--t3);font-size:12.5px;">No staffing needs configured yet — add a TA Staff count on an event to see it tracked here.</div>';
+    return;
+  }
+
+  wrap.innerHTML = rows.map(r=>{
+    const pct = r.needed?Math.min(100,Math.round(r.signedCount/r.needed*100)):0;
+    const barColor = r.left===0 ? 'var(--green)' : (r.signedCount>0?'var(--amber)':'#DC2626');
+    const dateStr = r.e.dateStart? fmtDatePlain(r.e.dateStart) : 'TBD';
+    const names = r.signedUp.map(s=>s.name).join(', ');
+    return `<div style="display:flex;align-items:center;gap:14px;padding:10px 12px;border:1px solid var(--border2);border-radius:var(--r);background:var(--surface2);">
+      <div style="min-width:170px;flex-shrink:0;">
+        <div style="font-size:12.5px;font-weight:600;color:var(--t1);">${r.e.event}</div>
+        <div style="font-size:10.5px;color:var(--t3);">${dateStr}${r.e.hub?' · '+r.e.hub:''}</div>
+      </div>
+      <div style="flex:1;min-width:120px;">
+        <div style="height:7px;border-radius:4px;background:var(--border2);overflow:hidden;">
+          <div style="height:100%;width:${pct}%;background:${barColor};border-radius:4px;"></div>
+        </div>
+        <div style="font-size:10.5px;color:var(--t3);margin-top:4px;max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${names||''}">${names?'Signed up: '+names:'No recruiters signed up yet'}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;min-width:90px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:${r.left===0?'var(--green)':'#DC2626'};">${r.signedCount}/${r.needed}</div>
+        <div style="font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;">${r.left===0?'Fully staffed':r.left+' spot'+(r.left===1?'':'s')+' left'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function renderRoster(){
+  renderStaffingSummary();
   const tbody = document.getElementById('roster-tbody');
   if(!tbody) return;
   const filterEvt = document.getElementById('roster-filter-event')?.value||'';
@@ -1677,6 +1735,18 @@ loadRoster();
 <div class="panel" id="panel-signup">
   <div style="padding:22px 28px 36px;max-width:900px;">
 
+    <!-- TA Staffing Needs summary card -->
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);margin-bottom:20px;">
+      <div style="padding:18px 24px 14px;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+        <div>
+          <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px;">TA Staffing Needs</div>
+          <div style="font-size:12px;color:var(--t3);">Spots remaining per conference, ranked by what still needs to be filled.</div>
+        </div>
+        <div id="staffing-totals" style="display:flex;gap:18px;"></div>
+      </div>
+      <div id="staffing-summary" style="padding:14px 24px 20px;display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;"></div>
+    </div>
+
     <!-- TAM Config card -->
     <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);margin-bottom:20px;">
       <div style="background:linear-gradient(110deg,var(--navy) 0%,var(--navy3) 100%);border-radius:var(--r2) var(--r2) 0 0;padding:18px 24px;display:flex;align-items:center;gap:14px;">
@@ -1709,6 +1779,12 @@ loadRoster();
         <div style="font-size:12px;color:var(--t3);">Sign up to staff an event. Your TAM will be notified automatically.</div>
       </div>
       <div style="padding:20px 24px;">
+        <div style="margin-bottom:18px;padding:12px 14px;background:var(--blue-lt);border:1px solid rgba(30,111,229,.18);border-radius:var(--r);display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:15px;line-height:1.1;">📍</span>
+          <div style="font-size:11.5px;color:var(--t2);line-height:1.55;">
+            <strong>Priority &amp; approvals:</strong> Local TA and recruiters based closer to the event location will be prioritized for staffing assignments. All sign-ups are reviewed and approved by the <strong>TAM</strong> and <strong>TA Event Lead</strong> before being confirmed — you'll be notified once a decision is made.
+          </div>
+        </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           <div class="ff"><label>Your Name *</label><input type="text" class="mi" id="su-name" placeholder="e.g. Jordan Smith"></div>
           <div class="ff"><label>Your Email *</label><input type="email" class="mi" id="su-email" placeholder="e.g. jordan@intuit.com"></div>
