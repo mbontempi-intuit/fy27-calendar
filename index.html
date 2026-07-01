@@ -1547,7 +1547,7 @@ async function pushSignupToSlack(row){
   try{
     const payload = JSON.stringify({
       recruiter_name: row.name + ' (' + row.email + ')',
-      Event_name: row.eventName,
+      event_name: row.eventName,
       tam_name: row.tamName + ' (' + row.tamEmail + ')',
       role: row.role,
       location: row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD')
