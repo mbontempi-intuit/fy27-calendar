@@ -1542,25 +1542,14 @@ async function pushSignupToSheet(row){
     });
   } catch(e){ console.warn('Signup sheet push failed:', e); }
 }
-
 async function pushSignupToSlack(row){
   const loc = row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD');
-  // Send as plain text so no-cors works (Slack receives message regardless of CORS restrictions)
-  const msg = ":tada: *New Recruiter Sign-Up!*\n"
-    + "*Recruiter:* " + row.name + " (" + row.email + ")\n"
-    + "*Event:* " + row.eventName + "\n"
-    + "*TAM:* " + row.tamName + " (" + row.tamEmail + ")\n"
-    + "*Role:* " + row.role + "\n"
-    + "*Location:* " + loc;
+  const msg = ":tada: *New Recruiter Sign-Up!*\n*Recruiter:* " + row.name + " (" + row.email + ")\n*Event:* " + row.eventName + "\n*TAM:* " + row.tamName + " (" + row.tamEmail + ")\n*Role:* " + row.role + "\n*Location:* " + loc;
   try{
-    await fetch(SLACK_WEBHOOK, {
-      method:'POST',
-      mode:'no-cors',
-      body: msg,
-      headers:{'Content-Type':'text/plain'}
-    });
+    await fetch(SLACK_WEBHOOK, {method:'POST', mode:'no-cors', body:msg, headers:{'Content-Type':'text/plain'}});
   } catch(e){ console.warn('Slack notification failed:', e); }
 }
+
 
 function autoFillTAContact(){
   const evtId = document.getElementById('su-event').value;
