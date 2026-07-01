@@ -1545,17 +1545,18 @@ async function pushSignupToSheet(row){
 
 async function pushSignupToSlack(row){
   try{
+    const payload = JSON.stringify({
+      recruiter_name: row.name + ' (' + row.email + ')',
+      Event_name: row.eventName,
+      tam_name: row.tamName + ' (' + row.tamEmail + ')',
+      role: row.role,
+      location: row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD')
+    });
     await fetch(SLACK_WEBHOOK, {
       method:'POST',
       mode:'no-cors',
-      body: JSON.stringify({
-        recruiter_name: row.name + ' (' + row.email + ')',
-        Event_name: row.eventName,
-        tam_name: row.tamName + ' (' + row.tamEmail + ')',
-        role: row.role,
-        location: row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD')
-      }),
-      headers:{'Content-Type':'application/json'}
+      body: payload,
+      headers:{'Content-Type':'text/plain'}
     });
   } catch(e){ console.warn('Slack notification failed:', e); }
 }
@@ -1636,11 +1637,7 @@ This notification was sent from the FY27 Intuit Event Calendar.`
     bannerMsg.innerHTML = `
       <div style="flex:1">
         <div style="font-size:13px;font-weight:600;color:#166534;margin-bottom:6px;">✓ ${name} has been signed up for ${evtName}.</div>
-        <div style="font-size:12px;color:#166534;margin-bottom:10px;">Click the button below to send the email notification to <strong>${tamName}</strong>${ccEmail?' (CC: '+taContact+')':''}.</div>
-        <a href="${mailtoUrl}" style="display:inline-flex;align-items:center;gap:7px;background:#166534;color:#fff;padding:9px 18px;border-radius:7px;text-decoration:none;font-size:13px;font-weight:600;">
-          📧 Send Email Notification
-        </a>
-        <div style="font-size:11px;color:#4B7A5A;margin-top:8px;">This opens your email client with the message pre-filled — just click Send.</div>
+        <div style="font-size:12px;color:#166534;">A Slack notification has been sent to the <strong>#ta-event-approval-notifcation-leadership</strong> channel with all the details.</div>
       </div>`;
     banner.style.display = 'flex';
     banner.style.alignItems = 'flex-start';
@@ -1807,7 +1804,7 @@ loadRoster();
     <div style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);box-shadow:var(--shadow-sm);margin-bottom:20px;">
       <div style="padding:18px 24px 14px;border-bottom:1px solid var(--border2);">
         <div style="font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px;">Recruiter Event Sign-Up</div>
-        <div style="font-size:12px;color:var(--t3);">Sign up to staff an event. Your TAM will be notified automatically.</div>
+        <div style="font-size:12px;color:var(--t3);">Sign up to staff an event. Your TAM and TA Event Lead will be notified via Slack.</div>
       </div>
       <div style="padding:20px 24px;">
         <div style="margin-bottom:18px;padding:12px 14px;background:var(--blue-lt);border:1px solid rgba(30,111,229,.18);border-radius:var(--r);display:flex;gap:10px;align-items:flex-start;">
@@ -1847,7 +1844,7 @@ loadRoster();
         </div>
         <div style="margin-top:18px;display:flex;gap:10px;align-items:center;">
           <button class="btn btn-primary" onclick="submitSignup()" style="padding:10px 22px;font-size:13px;">Submit Sign-Up</button>
-          <span style="font-size:12px;color:var(--t3);">Your TAM and TA Event Lead will be notified by email.</span>
+          <span style="font-size:12px;color:var(--t3);">Your TAM and TA Event Lead will be notified via Slack.</span>
         </div>
       </div>
     </div>
