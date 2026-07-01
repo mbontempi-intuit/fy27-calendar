@@ -1538,7 +1538,7 @@ async function pushSignupToSheet(row){
     await fetch(WEBHOOK, {
       method:'POST',
       body: JSON.stringify({type:'signup', row}),
-      headers:{'Content-Type':'application/json'}
+      mode:'no-cors', headers:{'Content-Type':'text/plain'}
     });
   } catch(e){ console.warn('Signup sheet push failed:', e); }
 }
