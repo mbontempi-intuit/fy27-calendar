@@ -1544,18 +1544,20 @@ async function pushSignupToSheet(row){
 }
 
 async function pushSignupToSlack(row){
+  const loc = row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD');
+  // Send as plain text so no-cors works (Slack receives message regardless of CORS restrictions)
+  const msg = ":tada: *New Recruiter Sign-Up!*\n"
+    + "*Recruiter:* " + row.name + " (" + row.email + ")\n"
+    + "*Event:* " + row.eventName + "\n"
+    + "*TAM:* " + row.tamName + " (" + row.tamEmail + ")\n"
+    + "*Role:* " + row.role + "\n"
+    + "*Location:* " + loc;
   try{
-    const payload = JSON.stringify({
-      recruiter_name: row.name + ' (' + row.email + ')',
-      event_name: row.eventName,
-      tam_name: row.tamName + ' (' + row.tamEmail + ')',
-      role: row.role,
-      location: row.travel === 'Yes' ? 'Travel required' : (row.travel === 'No' ? 'No travel' : 'TBD')
-    });
     await fetch(SLACK_WEBHOOK, {
       method:'POST',
-      body: payload,
-      headers:{'Content-Type':'application/json'}
+      mode:'no-cors',
+      body: msg,
+      headers:{'Content-Type':'text/plain'}
     });
   } catch(e){ console.warn('Slack notification failed:', e); }
 }
